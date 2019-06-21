@@ -1,5 +1,9 @@
-from flask import render_template
+from flask import redirect
+from objects.vk_auth import VKAuth
 
 
 def login():
-    return render_template('login_page.html')
+
+    auth = VKAuth('friends')
+    return redirect(auth.url)
+
