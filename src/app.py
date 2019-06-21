@@ -15,11 +15,12 @@ def create_app():
 
 def init_extentions(app):
     init_cors(app=app)
-    init_logging(app=app)
+    #init_logging(app=app)
 
 
 def init__blueprints(app):
-    pass
+    from web.routes import web_bp
+    app.register_blueprint(web_bp)
 
 
 if __name__ == '__main__':
