@@ -1,4 +1,7 @@
 from flask import Flask
+from extentions import (
+    init_cors
+)
 
 
 def create_app():
@@ -10,7 +13,7 @@ def create_app():
 
 
 def init_extentions(app):
-    pass
+    init_cors(app=app)
 
 
 def init__blueprints(app):
