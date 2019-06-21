@@ -1,7 +1,8 @@
 from flask import Flask
 from extentions import (
     init_cors,
-    init_logging
+    init_logging,
+    init_mongo
 )
 
 
@@ -15,6 +16,7 @@ def create_app():
 
 def init_extentions(app):
     init_cors(app=app)
+    init_mongo(app=app)
     #init_logging(app=app)
 
 

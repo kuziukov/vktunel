@@ -2,3 +2,4 @@ Flask==1.0.3
 envparse==0.2.0
 requests==2.21.0
 Flask-Cors==3.0.7
+flask-mongoengine==0.9.5

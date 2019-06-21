@@ -1,0 +1,24 @@
+version: '2.1'
+
+services:
+  server:
+    build:
+      context: .
+    command: python app.py
+    environment:
+      - PYTHONUNBUFFERED=1
+    env_file:
+      - .env
+    depends_on:
+      - mongo
+    ports:
+      - 5000:5000
+  mongo:
+    image: mongo
+    volumes:
+      - mongo_data:/var/lib/mongo
+    ports:
+      - 27017:27017
+volumes:
+  mongo_data:
+    driver: local

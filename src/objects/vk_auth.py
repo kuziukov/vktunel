@@ -18,4 +18,5 @@ class VKAuth(object):
             f'&display=page' \
             f'&redirect_uri={ self.redirect_url }' \
             f'&scope={ self.scope }' \
-            f'&response_type=code&v=5.95'
+            f'&response_type=code' \
+            f'&v=5.95'
