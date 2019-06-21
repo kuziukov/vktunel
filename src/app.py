@@ -19,7 +19,8 @@ def init_extentions(app):
 
 
 def init__blueprints(app):
-    pass
+    from web.routes import web_bp
+    app.register_blueprint(web_bp)
 
 
 if __name__ == '__main__':
