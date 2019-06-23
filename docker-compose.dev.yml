@@ -19,6 +19,14 @@ services:
       - mongo_data:/var/lib/mongo
     ports:
       - 27017:27017
+  redis:
+    image: redis
+    volumes:
+      - redis_data:/var/lib/redis
+    ports:
+      - 6379:6379
 volumes:
   mongo_data:
+    driver: local
+  redis_data:
     driver: local
