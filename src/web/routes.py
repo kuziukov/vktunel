@@ -7,9 +7,11 @@ from .views import (
     album_page,
     task_page
 )
-
+from auth.before_request import before_request
 
 web_bp = Blueprint('web', __name__, template_folder='./templates')
+
+web_bp.before_app_request(before_request)
 
 web_bp.add_url_rule('/', 'index', index, methods=['GET'])
 web_bp.add_url_rule('/login', 'login', login, methods=['GET', 'POST'])
