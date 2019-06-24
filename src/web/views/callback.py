@@ -13,6 +13,10 @@ from objects.vk_api import (
     VKApiResponse
 )
 from models import Users
+from auth.session import (
+    SessionManager
+)
+from auth.auth import Auth
 
 
 def callback():
@@ -34,13 +38,17 @@ def callback():
 
     users.name = f'{response["response"][0]["first_name"]} {response["response"][0]["last_name"]}'
 
+    # expire = datetime.utcnow(), datetime.utcnow() + timedelta(seconds=86400)
+
     try:
         users.save()
     except NotUniqueError:
         print('Authorized')
 
-    #   from datetime import datetime, timedelta
-    #   print(datetime.utcnow(), datetime.utcnow() + timedelta(seconds=86400))
+    sing_in, expires_in = Auth.sign_in(users)
+    print(sing_in, expires_in)
+
+    # save session_key to jwt and sent it to user
 
     return redirect(url_for('web.index'))
 

@@ -2,7 +2,8 @@ from flask import Flask
 from extentions import (
     init_cors,
     init_logging,
-    init_mongo
+    init_mongo,
+    init_redis
 )
 
 
@@ -17,7 +18,8 @@ def create_app():
 def init_extentions(app):
     init_cors(app=app)
     init_mongo(app=app)
-    #init_logging(app=app)
+    init_redis(app=app)
+#   init_logging(app=app)
 
 
 def init__blueprints(app):
