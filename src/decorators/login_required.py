@@ -6,6 +6,8 @@ from flask import (
     url_for,
     current_app
 )
+from auth.jwt import Token
+from models import Users
 
 
 def login_required(func):
@@ -17,11 +19,10 @@ def login_required(func):
 
         # try to decode jwt token
 
-        print(cookie)
+        token, expire = Token.parse(cookie)
 
-        print(g.user)
-
-        current_app.g.user = '1234'
+        if token:
+            g.user = Users.objects.get(id=token.user_id)
 
         return func(*args, **kwargs)
     return wrapped

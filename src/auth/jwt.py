@@ -40,6 +40,7 @@ class Token(object):
         self._scopes = scopes
 
     def generate(self, expires_in, secret=SECRET_KEY) -> (int, str):
+        print(expires_in)
         expires_in = datetime.utcnow() + timedelta(seconds=expires_in)
         payload_access = {
             'id': self._session_id,

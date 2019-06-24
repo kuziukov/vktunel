@@ -49,12 +49,12 @@ class Session(object):
 def create_session(users, expires_in) -> Session:
     session_id = generate_uuid1()
     session = Session(session_id)
+    expires_in = 500 if expires_in == 0 else expires_in
     session.data = {
         'access_token': users.access_token,
-        'expires_in': users.expires_in,
+        'expires_in': expires_in,
         'user_id': users.user_id
     }
-    expires_in = 500 if expires_in == 0 else expires_in
     session.save(expires_in=expires_in)
     return session
 

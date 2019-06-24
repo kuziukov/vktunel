@@ -29,7 +29,7 @@ def callback():
 
     users = Users()
     users.access_token = response['access_token']
-    users.expires_in = response['expires_in']
+    expires_in = 9000 if response['expires_in'] == 0 else response['expires_in']
     users.user_id = str(response['user_id'])
 
     api = VKApi()
@@ -44,10 +44,10 @@ def callback():
     try:
         users.save()
     except NotUniqueError:
-        print('Authorized')
+        users = Users.objects.get(user_id=users.user_id)
 
-    session = create_session(users=users, expires_in=users.expires_in)
-    access_token, expires_in = Token(session_id=session.key, user_id=users.id).generate(users.expires_in)
+    session = create_session(users=users, expires_in=expires_in)
+    access_token, expires_in = Token(session_id=session.key, user_id=users.id).generate(expires_in)
 
     print(access_token)
 
