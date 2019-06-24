@@ -3,7 +3,8 @@ from flask import (
     g,
     request,
     redirect,
-    url_for
+    url_for,
+    current_app
 )
 
 
@@ -18,7 +19,9 @@ def login_required(func):
 
         print(cookie)
 
-        g.user = None
+        print(g.user)
+
+        current_app.g.user = '1234'
 
         return func(*args, **kwargs)
     return wrapped
