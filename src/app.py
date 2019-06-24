@@ -10,8 +10,8 @@ from extentions import (
 def create_app():
     app = Flask(__name__, static_folder=None, static_url_path=None)
     app.config.from_object('config')
-    init__blueprints(app)
     init_extentions(app)
+    init__blueprints(app)
     return app
 
 

@@ -1,7 +1,8 @@
 from flask import (
     request,
     redirect,
-    url_for
+    url_for,
+    make_response
 )
 from mongoengine import NotUniqueError
 from objects.vk_access import (
@@ -14,9 +15,9 @@ from objects.vk_api import (
 )
 from models import Users
 from auth.session import (
-    SessionManager
+    create_session
 )
-from auth.auth import Auth
+from auth.jwt import Token
 
 
 def callback():
@@ -45,10 +46,13 @@ def callback():
     except NotUniqueError:
         print('Authorized')
 
-    sing_in, expires_in = Auth.sign_in(users)
-    print(sing_in, expires_in)
+    session = create_session(users=users, expires_in=users.expires_in)
+    access_token, expires_in = Token(session_id=session.key, user_id=users.id).generate(users.expires_in)
 
-    # save session_key to jwt and sent it to user
+    print(access_token)
 
-    return redirect(url_for('web.index'))
+    response = make_response(redirect(url_for('web.index')))
+    response.set_cookie('access_token', access_token)
+    return response
+
 

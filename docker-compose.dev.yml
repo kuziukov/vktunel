@@ -11,6 +11,7 @@ services:
       - .env
     depends_on:
       - mongo
+      - redis
     ports:
       - 5000:5000
   mongo:
