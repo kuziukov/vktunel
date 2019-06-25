@@ -36,6 +36,12 @@ services:
       - rabbit_data:/var/lib/rabbit
     ports:
       - 5672:5672
+    healthcheck:
+      test: ["CMD", "rabbitmqctl", "node_health_check"]
+      timeout: 10s
+      interval: 5s
+      retries: 3
+
 volumes:
   mongo_data:
     driver: local

@@ -16,3 +16,11 @@ def send_email(email, title, body):
         args=[email, title, body]
     )
     return task
+
+
+def download_album(user_id, community_id, album_id):
+    task = celery.send_task(
+        'download-album',
+        args=[user_id, community_id, album_id]
+    )
+    return task

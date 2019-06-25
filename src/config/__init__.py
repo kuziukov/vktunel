@@ -37,11 +37,7 @@ SESSION_STORE_URL = f'redis://{REDIS_HOST}:{REDIS_PORT}/0'
 CELERY_SETTINGS = dict(
     BROKER_URL=f'amqp://{RABBIT_USER}:{RABBIT_PASS}@{RABBIT_HOST}:{RABBIT_PORT}//',
     CELERY_ROUTES={
-        'send-email': {'queue': 'common'},
-        'send-push-notification': {'queue': 'common'},
-        'send-emergency-calls': {'queue': 'common'},
-        'resend-emergency-call': {'queue': 'common'},
-        'stop-emergency-calls': {'queue': 'common'},
+        'download-album': {'queue': 'common'},
     },
 )
 
