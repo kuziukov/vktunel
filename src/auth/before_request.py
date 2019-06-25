@@ -11,13 +11,16 @@ from models import Users
 
 
 def before_request():
-    cookie = request.cookies.get('access_token')
+    cookie = request.cookies.get('access_token', None)
     if cookie is None:
-        return redirect(url_for('web.index'))
+        g.user = None
+        return
 
-    # try to decode jwt token
-
-    token, expire = Token.parse(cookie)
+    token = None
+    try:
+        token, expire = Token.parse(cookie)
+    except Exception:
+        g.user = None
 
     if token:
         g.user = Users.objects.get(id=token.user_id)
