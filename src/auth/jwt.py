@@ -5,12 +5,6 @@ from config import (
 import jwt
 
 
-class JWT(object):
-    def __init__(self, key):
-        self.key = key
-        self.data = None
-
-
 class Token(object):
 
     _alg = 'HS256'
