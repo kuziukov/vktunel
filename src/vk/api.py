@@ -1,9 +1,9 @@
 import requests
-from vk_api.utils import (
+from vk.utils import (
     stringify_values,
     json_iter_parse
 )
-from vk_api.exceptions import VkAPIError
+from vk.exceptions import VkAPIError
 
 
 class APINamespace(object):
