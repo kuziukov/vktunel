@@ -4,6 +4,7 @@ from models.tasks import Tasks
 from extentions.celery import download_album
 from vk import API
 
+
 @login_required
 def task_page():
     tasks = Tasks.objects(user_id=str(g.user.id)).all()

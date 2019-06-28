@@ -10,16 +10,19 @@ def file_download(task_id):
     except (DoesNotExist, ValidationError):
         raise NotFound()
 
-    if task.archive:
-        filename = 'archive.zip'
-        response = None
-        try:
-            response = make_response(task.archive.read())
-            response.headers['Content-Type'] = task.archive.content_type
-            response.headers["Content-Disposition"] = f'attachment; filename={filename}'
-        except Exception:
-            raise NotFound()
-        return response
+    if task.archive is None:
+        raise NotFound()
+
+    filename = 'archive.zip'
+    try:
+        response = make_response(task.archive.read())
+        response.headers['Content-Type'] = task.archive.content_type
+        response.headers["Content-Disposition"] = f'attachment; filename={filename}'
+    except Exception:
+        raise NotFound()
+
+    return response
+
 
 
 
