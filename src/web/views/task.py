@@ -15,7 +15,7 @@ def task_page():
 def task_post(community_id, album_id):
 
     api = API(g.user.access_token, v=5.95)
-    response = api.photos.getAlbums(owner_id=f'-{community_id}',need_covers=1, album_ids=album_id)
+    response = api.photos.getAlbums(owner_id=f'-{community_id}', need_covers=1, album_ids=album_id)
     albums = response['items'][0]
 
     tasks = Tasks()
