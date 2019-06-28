@@ -27,8 +27,6 @@ def task_post(community_id, album_id):
     tasks.community_id = community_id
     tasks.album_id = album_id
     tasks.user_id = str(g.user.id)
-    tasks.status = False
-    tasks.src = None
     tasks.album_name = dict(albums).get('title')
 
     tasks.save()
