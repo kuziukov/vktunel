@@ -100,7 +100,7 @@ if user is None:
     raise Forbidden()
 
 
-from vk_api import API
+from vk import API
 
 
 community_id = '33264810'

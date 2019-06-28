@@ -14,7 +14,6 @@ def task_page():
 def task_post(community_id, album_id):
 
     api = API(g.user.access_token, v=5.95)
-
     response = api.photos.getAlbums(owner_id=f'-{community_id}',need_covers=1, album_ids=album_id)
     albums = response['items'][0]
 
@@ -26,9 +25,6 @@ def task_post(community_id, album_id):
 
     tasks.save()
 
-    print(community_id, album_id)
-
-    res = download_album(user_id=str(g.user.id), community_id=community_id, album_id=album_id)
-    print(res)
+    res = download_album(user_id=str(g.user.id), community_id=community_id, album_id=album_id, task_id=tasks.id)
 
     return redirect(url_for('web.albums', community_id=community_id))
