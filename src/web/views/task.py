@@ -3,7 +3,7 @@ from decorators.login_required import login_required
 from models.tasks import Tasks
 from objects.vk_api import VKApi, VKApiResponse
 from extentions.celery import download_album
-
+from vk import API
 
 @login_required
 def task_page():
@@ -14,11 +14,10 @@ def task_page():
 @login_required
 def task_post(community_id, album_id):
 
-    api = VKApi().url(method='photos.getAlbums', access_token=g.user.access_token,
-                      parameters=f'owner_id=-{community_id}&need_covers=1&album_ids={album_id}')
-    response = VKApiResponse.response(api)
-    communities = response['response']
-    albums = communities['items'][0]
+    api = API(g.user.access_token, v=5.95)
+
+    response = api.photos.getAlbums(owner_id=f'-{community_id}',need_covers=1, album_ids=album_id)
+    albums = response['items'][0]
 
     tasks = Tasks()
     tasks.community_id = community_id
