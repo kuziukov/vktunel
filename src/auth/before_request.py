@@ -5,6 +5,7 @@ from flask import (
     url_for,
     current_app
 )
+from mongoengine import DoesNotExist, ValidationError
 
 from auth import Token
 from models import Users
@@ -23,6 +24,9 @@ def before_request():
         g.user = None
 
     if token:
-        g.user = Users.objects.get(id=token.user_id)
+        try:
+            g.user = Users.objects.get(id=token.user_id)
+        except (DoesNotExist, ValidationError):
+            g.user = None
     else:
         g.user = None
