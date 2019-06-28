@@ -7,6 +7,7 @@ from models import Users
 from models.tasks import Tasks
 
 from mongoengine import connect, DoesNotExist, ValidationError
+from vk import API
 
 
 class Size(object):
@@ -69,7 +70,7 @@ class PhotoAlbum(object):
     def count_in_list(self):
         return len(self._listOfPhotos)
 
-    def download(self):
+    def make_archive(self):
 
         for photo in self._listOfPhotos:
             urllib.request.urlretrieve(photo.picture.url, f'{self.folder}/{photo.picture.name}')
@@ -94,13 +95,7 @@ connect(
 try:
     user = Users.objects.get(id='5d0d072af34e9164d8e4cc7a')
 except (DoesNotExist, ValidationError):
-    user = None
-
-if user is None:
     raise Forbidden()
-
-
-from vk import API
 
 
 community_id = '33264810'
@@ -117,7 +112,7 @@ count = response['count']
 
 photoAlbum = PhotoAlbum()
 photoAlbum.add(items)
-archive = photoAlbum.download()
+archive = photoAlbum.make_archive()
 
 task = Tasks.objects.get(id='5d120a5c88dd9d8b201f5a56')
 task.archive.put(archive, content_type='application/zip')
