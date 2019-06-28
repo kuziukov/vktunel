@@ -1,6 +1,5 @@
 from flask import render_template, g
 from decorators.login_required import login_required
-from objects.vk_api import VKApi, VKApiResponse
 from datetime import datetime
 from vk import API
 

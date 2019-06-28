@@ -1,7 +1,6 @@
 from flask import render_template, redirect, url_for, g
 from decorators.login_required import login_required
 from models.tasks import Tasks
-from objects.vk_api import VKApi, VKApiResponse
 from extentions.celery import download_album
 from vk import API
 
