@@ -5,7 +5,7 @@ from werkzeug.exceptions import Forbidden
 
 from models import Users
 from models.tasks import Tasks
-from objects.vk_api import VKApi, VKApiResponse
+
 from mongoengine import connect, DoesNotExist, ValidationError
 
 
@@ -100,22 +100,19 @@ if user is None:
     raise Forbidden()
 
 
-photos = []
+from vk_api import API
+
 
 community_id = '33264810'
 album_id = '197699202'
 
 
-community = VKApi().url(method='photos.get', access_token=user.access_token,
-                        parameters=f'owner_id=-{community_id}&album_id={album_id}&count=50')
-community_response = VKApiResponse.response(community)
+api = API(user.access_token, v=5.95)
+response = api.photos.get(owner_id=f'-{community_id}', album_id=album_id, count=50)
 
-community_response = community_response['response']
 
-items = community_response['items']
-count = community_response['count']
-
-photos = photos + items
+items = response['items']
+count = response['count']
 
 
 photoAlbum = PhotoAlbum()

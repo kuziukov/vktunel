@@ -7,10 +7,7 @@ from extentions.celery import download_album
 
 @login_required
 def task_page():
-    print(g.user.id)
-
     tasks = Tasks.objects(user_id=str(g.user.id)).all()
-
     return render_template('task_page.html', tasks=tasks)
 
 
