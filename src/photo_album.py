@@ -1,12 +1,12 @@
 import os
 import shutil
 import urllib.request
-
-from flask import current_app
+from werkzeug.exceptions import Forbidden
 
 from models import Users
+from models.tasks import Tasks
 from objects.vk_api import VKApi, VKApiResponse
-from mongoengine import connect
+from mongoengine import connect, DoesNotExist, ValidationError
 
 
 class Size(object):
@@ -69,11 +69,15 @@ class PhotoAlbum(object):
     def count_in_list(self):
         return len(self._listOfPhotos)
 
-    def download(self, user, community_id):
+    def download(self):
+
         for photo in self._listOfPhotos:
             urllib.request.urlretrieve(photo.picture.url, f'{self.folder}/{photo.picture.name}')
 
         shutil.make_archive(self.folder, 'zip', self.folder)
+
+        archive = open(f'{self.folder}.zip', 'rb')
+        return archive
 
     def __del__(self):
         shutil.rmtree(self.folder, ignore_errors=True)
@@ -89,11 +93,11 @@ connect(
 
 try:
     user = Users.objects.get(id='5d0d072af34e9164d8e4cc7a')
-except Users.DoesNotExist:
+except (DoesNotExist, ValidationError):
     user = None
 
 if user is None:
-    raise Exception()
+    raise Forbidden()
 
 
 photos = []
@@ -103,7 +107,7 @@ album_id = '197699202'
 
 
 community = VKApi().url(method='photos.get', access_token=user.access_token,
-                        parameters=f'owner_id=-{community_id}&album_id={album_id}&count=1000')
+                        parameters=f'owner_id=-{community_id}&album_id={album_id}&count=50')
 community_response = VKApiResponse.response(community)
 
 community_response = community_response['response']
@@ -114,10 +118,13 @@ count = community_response['count']
 photos = photos + items
 
 
-
 photoAlbum = PhotoAlbum()
 photoAlbum.add(items)
-photoAlbum.download('1234', '123456')
+archive = photoAlbum.download()
+
+task = Tasks.objects.get(id='5d120a5c88dd9d8b201f5a56')
+task.archive.put(archive, content_type='application/zip')
+task.save()
 
 
 
