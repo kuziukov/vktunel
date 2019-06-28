@@ -26,6 +26,6 @@ def task_post(community_id, album_id):
 
     tasks.save()
 
-    res = download_album(user_id=str(g.user.id), community_id=community_id, album_id=album_id, task_id=tasks.id)
+    res = download_album(user_id=str(g.user.id), community_id=community_id, album_id=album_id, task_id=str(tasks.id))
 
     return redirect(url_for('web.albums', community_id=community_id))
