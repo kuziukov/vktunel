@@ -40,13 +40,24 @@ class APIBase(object):
             elif 'error' in response_or_error:
                 api_error = VkAPIError(request.response['error'])
                 request.api_error = api_error
-                return request.api_error
+                return self.handle_api_error(request)
 
     def _prepare_request(self, request):
         request.method_params['access_token'] = self.access_token
 
     def get_access_token(self):
         raise NotImplementedError
+
+    def handle_api_error(self, request):
+
+        api_error_handler_name = 'on_api_error_' + str(request.api_error.code)
+        api_error_handler = getattr(self, api_error_handler_name, self.on_api_error)
+
+        return api_error_handler(request)
+
+    def on_api_error(self, request):
+        print(f'API error: {request.api_error}')
+        raise request.api_error
 
 
 class API(APIBase):

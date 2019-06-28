@@ -2,6 +2,7 @@ from flask import render_template, g
 from decorators.login_required import login_required
 from datetime import datetime
 from vk import API
+from vk.exceptions import VkAPIError
 
 
 @login_required
@@ -14,5 +15,4 @@ def album_page(community_id):
 
     albums = response['items']
     count = response['count']
-
     return render_template('album_page.html', albums=albums, count=count, datetime=datetime, community=community)
