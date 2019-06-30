@@ -57,6 +57,7 @@ class PhotoAlbum(object):
     def __init__(self):
         self.folder = 'files/albums/photo_album'
         self._listOfPhotos = []
+        self.archive_name = None
         try:
             os.makedirs(self.folder)
         except FileExistsError:
@@ -75,7 +76,7 @@ class PhotoAlbum(object):
         for photo in self._listOfPhotos:
             urllib.request.urlretrieve(photo.picture.url, f'{self.folder}/{photo.picture.name}')
 
-        shutil.make_archive(self.folder, 'zip', self.folder)
+        self.archive_name = shutil.make_archive(self.folder, 'zip', self.folder)
 
         archive = open(f'{self.folder}.zip', 'rb')
         return archive
@@ -93,7 +94,7 @@ connect(
 
 
 try:
-    user = Users.objects.get(id='5d0d072af34e9164d8e4cc7a')
+    user = Users.objects.get(id='5d111ba820bc040c38ff97d0')
 except (DoesNotExist, ValidationError):
     raise Forbidden()
 
@@ -105,7 +106,6 @@ album_id = '197699202'
 api = API(user.access_token, v=5.95)
 response = api.photos.get(owner_id=f'-{community_id}', album_id=album_id, count=50)
 
-
 items = response['items']
 count = response['count']
 
@@ -114,7 +114,7 @@ photoAlbum = PhotoAlbum()
 photoAlbum.add(items)
 archive = photoAlbum.make_archive()
 
-task = Tasks.objects.get(id='5d120a5c88dd9d8b201f5a56')
+task = Tasks.objects.get(id='5d166f2d6af12ae966ee6d86')
 task.archive.put(archive, content_type='application/zip')
 task.save()
 
