@@ -55,14 +55,24 @@ class Photo(object):
 class PhotoAlbum(object):
 
     def __init__(self):
-        self.folder = 'files/albums/photo_album'
+        self._path = 'files/albums/'
+        self._folder = 'photo_album'
         self._listOfPhotos = []
         self.archive_name = None
+        self.archive = None
         try:
-            os.makedirs(self.folder)
+            os.makedirs(self.path)
         except FileExistsError:
-            shutil.rmtree(self.folder, ignore_errors=True)
+            shutil.rmtree(self.path, ignore_errors=True)
             self.__init__()
+
+    @property
+    def path(self):
+        return self._path + self._folder
+
+    @property
+    def clean_path(self):
+        return self._path
 
     def add(self, items):
         for item in items:
@@ -74,15 +84,16 @@ class PhotoAlbum(object):
     def make_archive(self):
 
         for photo in self._listOfPhotos:
-            urllib.request.urlretrieve(photo.picture.url, f'{self.folder}/{photo.picture.name}')
+            urllib.request.urlretrieve(photo.picture.url, f'{self.path}/{photo.picture.name}')
 
-        self.archive_name = shutil.make_archive(self.folder, 'zip', self.folder)
+        self.archive_name = shutil.make_archive(self.path, 'zip', self.path)
 
-        archive = open(f'{self.folder}.zip', 'rb')
-        return archive
+        self.archive = open(f'{self.path}.zip', 'rb')
+        return self.archive
 
     def __del__(self):
-        shutil.rmtree(self.folder, ignore_errors=True)
+        self.archive.close()
+        shutil.rmtree(self.clean_path)
 
 
 connect(
@@ -113,6 +124,8 @@ count = response['count']
 photoAlbum = PhotoAlbum()
 photoAlbum.add(items)
 archive = photoAlbum.make_archive()
+
+del photoAlbum
 
 task = Tasks.objects.get(id='5d166f2d6af12ae966ee6d86')
 task.archive.put(archive, content_type='application/zip')
