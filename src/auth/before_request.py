@@ -1,10 +1,9 @@
 from flask import (
     g,
-    request,
-    redirect,
-    url_for,
-    current_app
+    request
 )
+from jwt import DecodeError, ExpiredSignatureError
+from mongoengine import DoesNotExist, ValidationError
 
 from auth import Token
 from models import Users
@@ -16,13 +15,14 @@ def before_request():
         g.user = None
         return
 
-    token = None
     try:
         token, expire = Token.parse(cookie)
-    except Exception:
+    except (DecodeError, ExpiredSignatureError):
         g.user = None
+        return
 
-    if token:
+    try:
         g.user = Users.objects.get(id=token.user_id)
-    else:
+    except (DoesNotExist, ValidationError):
         g.user = None
+        return

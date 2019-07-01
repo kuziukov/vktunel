@@ -19,9 +19,9 @@
             <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
               <div class="d-flex justify-content-between align-items-center w-100">
                 <strong class="text-gray-dark">{{value.album_name}}</strong>
-                <a href="#">{{ value.src if value.status else '' }}</a>
+                <a href="{{ url_for('web.file_download', task_id=value.id) if value.archive else '' }}">{{ 'Скачать' if value.archive else '' }}</a>
               </div>
-              <span class="d-block">Статус задачи: {{ 'готово' if value.status else 'выполняется' }}</span>
+              <span class="d-block">Статус задачи: {{ 'готово' if value.archive else 'выполняется' }}</span>
             </div>
           </div>
 

@@ -12,6 +12,7 @@ services:
     depends_on:
       - mongo
       - redis
+      - rabbit
     ports:
       - 5000:5000
   mongo:
@@ -26,8 +27,25 @@ services:
       - redis_data:/var/lib/redis
     ports:
       - 6379:6379
+  rabbit:
+    image: rabbitmq
+    environment:
+      - RABBITMQ_DEFAULT_USER=user
+      - RABBITMQ_DEFAULT_PASS=user
+    volumes:
+      - rabbit_data:/var/lib/rabbit
+    ports:
+      - 5672:5672
+    healthcheck:
+      test: ["CMD", "rabbitmqctl", "node_health_check"]
+      timeout: 10s
+      interval: 5s
+      retries: 3
+
 volumes:
   mongo_data:
     driver: local
   redis_data:
+    driver: local
+  rabbit_data:
     driver: local

@@ -6,7 +6,12 @@ from .env import (
     MONGO_HOST,
     MONGO_DBNAME,
     REDIS_PORT,
-    REDIS_HOST
+    REDIS_HOST,
+    RABBIT_HOST,
+    RABBIT_PORT,
+    RABBIT_USER,
+    RABBIT_PASS,
+
 )
 
 
@@ -27,3 +32,12 @@ SECRET_KEY = '0bde8eef5dc532bc3d88e6c2caf5d3cb27b7d591d0cbb5941d7676a2798369a969
 
 
 SESSION_STORE_URL = f'redis://{REDIS_HOST}:{REDIS_PORT}/0'
+
+
+CELERY_SETTINGS = dict(
+    BROKER_URL=f'amqp://{RABBIT_USER}:{RABBIT_PASS}@{RABBIT_HOST}:{RABBIT_PORT}//',
+    CELERY_ROUTES={
+        'download-album': {'queue': 'common'},
+    },
+)
+

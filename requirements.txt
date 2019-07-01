@@ -5,3 +5,5 @@ Flask-Cors==3.0.7
 flask-mongoengine==0.9.5
 flask-redis==0.4.0
 PyJWT==1.7.1
+celery==4.3.0
+kombu=4.6.3

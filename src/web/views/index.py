@@ -1,5 +1,6 @@
-from flask import render_template
+from flask import render_template, g
 
 
 def index():
-    return render_template('landing_page.html')
+    page = 'main_page.html' if g.user else 'landing_page.html'
+    return render_template(page)

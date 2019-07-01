@@ -21,26 +21,28 @@
     {% if g.user %}
 
         <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
-            <h5 class="my-0 mr-md-auto font-weight-normal">VK Tunel</h5>
+            <h5 class="my-0 mr-md-auto font-weight-normal">Вскачай все</h5>
             <nav class="my-2 my-md-0 mr-md-3">
                 <a class="p-2 text-dark" href="{{ url_for('web.index') }}">На главную</a>
                 <a class="p-2 text-dark" href="{{ url_for('web.community') }}">Сообщества</a>
-                <a class="p-2 text-dark" href="#">Поддержка</a>
+                <a class="p-2 text-dark" href="{{ url_for('web.support')}}">Поддержка</a>
             </nav>
-            <a class="btn btn-outline-primary" href="{{ url_for('web.tasks') }}">Дмитрий</a>
+            <a class="btn btn-outline-primary" href="{{ url_for('web.tasks') }}">
+                Дмитрий
+                <span class="badge badge-pill badge-primary">2</span>
+                <span class="sr-only">unread messages</span>
+            </a>
+
         </div>
 
     {% else %}
-
         <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
-          <h5 class="my-0 mr-md-auto font-weight-normal">VK Tunel</h5>
-          <nav class="my-2 my-md-0 mr-md-3">
-            <a class="p-2 text-dark" href="#">Features</a>
-            <a class="p-2 text-dark" href="#">Enterprise</a>
-            <a class="p-2 text-dark" href="#">Support</a>
-            <a class="p-2 text-dark" href="#">Pricing</a>
-          </nav>
-          <a class="btn btn-outline-primary" href="{{ url_for('web.login') }}">Sign up</a>
+            <h5 class="my-0 mr-md-auto font-weight-normal">VK Tunel</h5>
+            <nav class="my-2 my-md-0 mr-md-3">
+                <a class="p-2 text-dark" href="{{ url_for('web.index') }}">На главную</a>
+                <a class="p-2 text-dark" href="{{ url_for('web.support')}}">Поддержка</a>
+            </nav>
+            <a class="btn btn-outline-primary" href="{{ url_for('web.login') }}">Присоединиться</a>
         </div>
 
     {% endif %}
