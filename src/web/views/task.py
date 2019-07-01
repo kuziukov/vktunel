@@ -7,7 +7,7 @@ from vk import API
 
 @login_required
 def task_page():
-    tasks = Tasks.objects(user_id=str(g.user.id)).all()
+    tasks = Tasks.objects(user_id=str(g.user.id)).order_by('-created_at').all()
     return render_template('task_page.html', tasks=tasks)
 
 
