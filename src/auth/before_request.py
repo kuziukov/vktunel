@@ -7,6 +7,7 @@ from mongoengine import DoesNotExist, ValidationError
 
 from auth import Token
 from models import Users
+from models.tasks import Tasks
 
 
 def before_request():
@@ -26,3 +27,12 @@ def before_request():
     except (DoesNotExist, ValidationError):
         g.user = None
         return
+
+    try:
+        task_count = Tasks.objects(user_id=str(g.user.id), archive__exists=False).count()
+        g.tasks_in_works = task_count
+    except (DoesNotExist, ValidationError):
+        g.tasks_in_works = 0
+        return
+
+

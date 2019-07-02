@@ -7,7 +7,7 @@
     <meta name="author" content="">
     <link rel="icon" href="/docs/4.0/assets/img/favicons/favicon.ico">
 
-    <title>Pricing example for Bootstrap</title>
+    <title>{% block title %}{% endblock %}</title>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/pricing/">
 
@@ -28,8 +28,8 @@
                 <a class="p-2 text-dark" href="{{ url_for('web.support')}}">Поддержка</a>
             </nav>
             <a class="btn btn-outline-primary" href="{{ url_for('web.tasks') }}">
-                Дмитрий
-                <span class="badge badge-pill badge-primary">2</span>
+                {{ g.user.name }}
+                <span class="badge badge-pill badge-primary">{{ g.tasks_in_works }}</span>
                 <span class="sr-only">unread messages</span>
             </a>
 
