@@ -3,8 +3,7 @@ from flask import (
     g,
     request,
     redirect,
-    url_for,
-    current_app
+    url_for
 )
 from jwt import DecodeError, ExpiredSignatureError
 from mongoengine import DoesNotExist, ValidationError

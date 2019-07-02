@@ -1,7 +1,6 @@
 from mongoengine import (
     Document,
     StringField,
-    BooleanField,
     FileField,
     DateTimeField
 )
