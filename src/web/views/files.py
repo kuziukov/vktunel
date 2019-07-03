@@ -6,6 +6,11 @@ from werkzeug.exceptions import NotFound
 from models.tasks import Tasks
 
 
+def generate_archive(archive):
+    for chunk in archive.get():
+        yield chunk
+
+
 def file_download(task_id):
     try:
         task = Tasks.objects(id=task_id).first()
@@ -22,17 +27,7 @@ def file_download(task_id):
         'Content-Disposition': f'attachment; filename={filename}'
     }
 
-    client = MongoClient('mongodb://localhost:27017/')
-
-    file_store = GridFSBucket(client.vktunel)
-
-    file_handler = file_store.open_download_stream(task.archive)
-
-    def generate():
-        for obj in file_handler:
-            yield obj
-
-    return Response(generate(), headers=headers, direct_passthrough=True)
+    return Response(stream_with_context(generate_archive(task.archive)), headers=headers, direct_passthrough=True)
 
 
 
