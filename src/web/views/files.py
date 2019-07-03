@@ -1,5 +1,7 @@
-from flask import make_response, Response, stream_with_context
+from flask import make_response, Response, stream_with_context, current_app, g
+from gridfs import GridFSBucket
 from mongoengine import DoesNotExist, ValidationError
+from pymongo import MongoClient
 from werkzeug.exceptions import NotFound
 from models.tasks import Tasks
 
@@ -20,11 +22,17 @@ def file_download(task_id):
         'Content-Disposition': f'attachment; filename={filename}'
     }
 
+    client = MongoClient('mongodb://localhost:27017/')
+
+    file_store = GridFSBucket(client.vktunel)
+
+    file_handler = file_store.open_download_stream(task.archive)
+
     def generate():
-        for obj in task.archive.read():
+        for obj in file_handler:
             yield obj
 
-    return Response(stream_with_context(generate()), headers=headers, direct_passthrough=True)
+    return Response(generate(), headers=headers, direct_passthrough=True)
 
 
 
