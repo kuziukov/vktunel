@@ -1,7 +1,14 @@
-from flask import make_response
+from flask import make_response, Response, stream_with_context, current_app, g
+from gridfs import GridFSBucket
 from mongoengine import DoesNotExist, ValidationError
+from pymongo import MongoClient
 from werkzeug.exceptions import NotFound
 from models.tasks import Tasks
+
+
+def generate_archive(archive):
+    for chunk in archive.get():
+        yield chunk
 
 
 def file_download(task_id):
@@ -14,14 +21,13 @@ def file_download(task_id):
         raise NotFound()
 
     filename = 'archive.zip'
-    try:
-        response = make_response(task.archive.read())
-        response.headers['Content-Type'] = task.archive.content_type
-        response.headers["Content-Disposition"] = f'attachment; filename={filename}'
-    except Exception:
-        raise NotFound()
 
-    return response
+    headers = {
+        'Content-Type': task.archive.content_type,
+        'Content-Disposition': f'attachment; filename={filename}'
+    }
+
+    return Response(stream_with_context(generate_archive(task.archive)), headers=headers, direct_passthrough=True)
 
 
 
