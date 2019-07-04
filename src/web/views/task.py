@@ -3,12 +3,13 @@ from decorators.login_required import login_required
 from models.tasks import Tasks
 from extentions.celery import download_album
 from vk import API
+from utils import convert_size
 
 
 @login_required
 def task_page():
     tasks = Tasks.objects(user_id=str(g.user.id)).order_by('-created_at').all()
-    return render_template('task_page.html', tasks=tasks)
+    return render_template('task_page.html', tasks=tasks, convert_size=convert_size)
 
 
 @login_required
