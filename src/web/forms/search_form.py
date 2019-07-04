@@ -8,4 +8,4 @@ from wtforms import (
 
 
 class SearchForm(FlaskForm):
-    search = StringField('Ссылка')
+    search = StringField('https://vk.com/fest')
