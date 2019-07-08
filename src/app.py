@@ -8,7 +8,7 @@ from extentions import (
 
 
 def create_app():
-    app = Flask(__name__, static_folder='static_folder', static_url_path=None)
+    app = Flask(__name__, static_folder='static', static_url_path=None)
     app.config.from_object('config')
     init_extentions(app)
     init__blueprints(app)
