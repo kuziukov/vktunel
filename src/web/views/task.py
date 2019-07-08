@@ -9,7 +9,7 @@ from models.notification import Notification, NotificationsData
 
 @login_required
 def task_page():
-    tasks = Tasks.objects(user_id=str(g.user.id)).order_by('-created_at').all()
+    tasks = Tasks.objects(user=g.user).order_by('-created_at').all()
     return render_template('task_page.html', tasks=tasks, convert_size=convert_size)
 
 
@@ -23,7 +23,7 @@ def task_post(community_id, album_id):
     tasks = Tasks()
     tasks.community_id = community_id
     tasks.album_id = album_id
-    tasks.user_id = str(g.user.id)
+    tasks.user = g.user
     tasks.album_name = dict(albums).get('title')
     tasks.save()
 

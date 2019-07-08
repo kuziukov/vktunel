@@ -16,6 +16,6 @@ class TasksGet(Resource):
     @login_required
     def get(self):
         user = self.g.user
-        tasks = Tasks.objects(user_id=user)
+        tasks = Tasks.objects(user=user)
 
         return SerializationSchema().serialize({'items': tasks, 'totals': tasks.count()})

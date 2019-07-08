@@ -2,13 +2,15 @@ from mongoengine import (
     Document,
     StringField,
     FileField,
-    DateTimeField
+    DateTimeField,
+    ReferenceField
 )
 from datetime import datetime
+from .users import Users
 
 
 class Tasks(Document):
-    user_id = StringField(required=True)
+    user = ReferenceField(Users, required=True)
     community_id = StringField(required=True)
     album_id = StringField(required=True)
     album_name = StringField(required=True)

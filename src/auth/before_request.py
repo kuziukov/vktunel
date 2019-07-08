@@ -29,7 +29,7 @@ def before_request():
         return
 
     try:
-        task_count = Tasks.objects(user_id=str(g.user.id), archive__exists=False).count()
+        task_count = Tasks.objects(user=g.user, archive__exists=False).count()
         g.tasks_in_works = task_count
     except (DoesNotExist, ValidationError):
         g.tasks_in_works = 0
