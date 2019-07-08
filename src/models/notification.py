@@ -20,7 +20,7 @@ class NotificationsData(EmbeddedDocument):
 class Notification(Document):
     user = ReferenceField(Users)
     type = StringField(default=None)
-    created_at = DateTimeField(default=datetime.now)
+    created_at = DateTimeField(default=datetime.utcnow)
     parent = EmbeddedDocumentField(NotificationsData)
 
     meta = {
