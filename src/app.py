@@ -24,7 +24,9 @@ def init_extentions(app):
 
 def init__blueprints(app):
     from web.routes import web_bp
+    from api.routes import api_bp
     app.register_blueprint(web_bp)
+    app.register_blueprint(api_bp)
 
 
 if __name__ == '__main__':

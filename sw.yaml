@@ -1,0 +1,110 @@
+swagger: '2.0'
+info:
+  version: '1.0'
+  title: WLUSM
+  description: API для сервиса по скачиванию альбомов из ВК.
+schemes:
+  - http
+  - https
+securityDefinitions:
+  ApiKeyAuth:
+    type: apiKey
+    in: header
+    name: X-Auth-Token
+consumes:
+  - application/json
+host: localhost:5000
+basePath: /v1.0
+paths:
+  '/notifications':
+    get:
+      tags:
+        - notifications
+      summary: Запрос на получение всех notifications
+      operationId: notifications_get
+      security:
+        - ApiKeyAuth: []
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/response'
+  '/notification/{notificationId}':
+    put:
+      tags:
+        - notifications
+      summary: Запрос на изменение уведомления
+      security:
+        - ApiKeyAuth: []
+      produces:
+        - application/json
+      operationId: notification_update
+      parameters:
+        - name: notificationId
+          in: path
+          required: true
+          type: string
+        - name: json
+          in: body
+          required: true
+          schema:
+            type: object
+            properties:
+              hide:
+                type: boolean
+                default: false
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/response'
+    delete:
+      tags:
+        - notifications
+      summary: Запрос на регистрацию приложения
+      produces:
+        - application/json
+      operationId: notification_delete
+      security:
+        - ApiKeyAuth: []
+      parameters:
+        - name: notificationId
+          in: path
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/response'
+definitions:
+  response:
+    type: object
+    properties:
+      status:
+        type: string
+      code:
+        type: number
+      result:
+        type: object
+parameters:
+  lang:
+    name: lang
+    in: query
+    type: string
+    description: >
+      Language:
+       * `en` - english
+       * `ru` - russian
+  start:
+    name: start
+    in: query
+    type: integer
+    default: 0
+  limit:
+    name: limit
+    in: query
+    type: integer
+    default: 50
