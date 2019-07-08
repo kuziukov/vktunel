@@ -32,6 +32,34 @@ paths:
           schema:
             $ref: '#/definitions/response'
   '/notification/{notificationId}':
+    put:
+      tags:
+        - notifications
+      summary: Запрос на изменение уведомления
+      security:
+        - ApiKeyAuth: []
+      produces:
+        - application/json
+      operationId: notification_update
+      parameters:
+        - name: notificationId
+          in: path
+          required: true
+          type: string
+        - name: json
+          in: body
+          required: true
+          schema:
+            type: object
+            properties:
+              hide:
+                type: boolean
+                default: false
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/response'
     delete:
       tags:
         - notifications
