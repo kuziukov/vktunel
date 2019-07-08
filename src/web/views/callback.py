@@ -5,16 +5,16 @@ from flask import (
     make_response
 )
 from mongoengine import NotUniqueError
-from objects.vk_access import (
+from cores.objects import (
     VKAccess,
     VKAccessResponse
 )
 from models import Users
-from auth.session import (
+from api.auth.session import (
     create_session
 )
-from auth.jwt import Token
-from vk import API
+from api.auth.token import Token
+from cores.vk import API
 
 
 def callback():

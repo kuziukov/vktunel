@@ -1,11 +1,9 @@
 import requests
-from vk.utils import (
+from cores.vk.utils import (
     json_iter_parse
 )
-from vk.exceptions import VkAPIError
-from vk.methods import (
-    APINamespace
-)
+from .exceptions import VkAPIError
+from .methods import APINamespace
 
 
 class APIBase(object):

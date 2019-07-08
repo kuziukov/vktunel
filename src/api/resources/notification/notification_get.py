@@ -1,6 +1,7 @@
 from api.auth.decorators import login_required
-from marshmallow_core import ApiSchema, fields
-from rest_core import Resource
+from cores.marshmallow_core import ApiSchema
+from cores.marshmallow_core import fields
+from cores.rest_core import Resource
 from .schemas import NotificationSchema
 from models.notification import Notification
 

@@ -13,7 +13,7 @@ from .views import (
     file_download,
     support_page
 )
-from auth.before_request import before_request
+from api.auth.before_request import before_request
 
 
 web_bp = Blueprint('web', __name__, template_folder='./templates')

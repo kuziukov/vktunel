@@ -6,7 +6,7 @@ from flask import (
     url_for
 )
 
-from vk import API
+from cores.vk import API
 from web.forms.search_form import SearchForm
 
 

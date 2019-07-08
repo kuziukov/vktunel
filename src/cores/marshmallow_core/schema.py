@@ -2,7 +2,7 @@ from marshmallow import (
     Schema as OriginSchema,
     ValidationError,
 )
-from rest_core.exceptions import DataError
+from cores.rest_core.exceptions import DataError
 
 
 class Schema(OriginSchema):

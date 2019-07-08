@@ -1,11 +1,11 @@
 from flask import render_template, g
-from decorators.login_required import login_required
 from datetime import datetime
-from vk import API
-from vk.exceptions import VkAPIError
+from cores.vk import API
+from cores.vk import VkAPIError
+from api.auth.decorators import web_login_required
 
 
-@login_required
+@web_login_required
 def album_page(community_id):
 
     api = API(g.user.access_token, v=5.95)

@@ -1,5 +1,5 @@
 from flask import Blueprint
-from rest_core import Api
+from cores.rest_core import Api
 
 from .resources.notification import (
     NotificationsGet,

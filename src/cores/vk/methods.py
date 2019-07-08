@@ -1,4 +1,4 @@
-from vk.utils import stringify_values
+from cores.vk.utils import stringify_values
 
 
 class APINamespace(object):

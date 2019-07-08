@@ -1,8 +1,9 @@
 from api.auth.decorators import login_required
 from api.resources.task import TaskSchema
-from marshmallow_core import ApiSchema, fields
+from cores.marshmallow_core import ApiSchema
+from cores.marshmallow_core import fields
 from models.tasks import Tasks
-from rest_core import Resource
+from cores.rest_core import Resource
 
 
 class SerializationSchema(ApiSchema):

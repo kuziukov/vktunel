@@ -1,5 +1,5 @@
 from flask import redirect
-from objects.vk_auth import VKAuth
+from cores.objects import VKAuth
 
 
 def login():

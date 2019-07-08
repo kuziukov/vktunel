@@ -1,7 +1,7 @@
-from marshmallow_core import (
-    fields,
+from cores.marshmallow_core import (
     ApiSchema
 )
+from cores.marshmallow_core import fields
 from api.resources.task.schemas import TaskSchema
 
 
