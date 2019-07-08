@@ -4,6 +4,7 @@ from models.tasks import Tasks
 from extentions.celery import download_album
 from vk import API
 from utils import convert_size
+from models.notification import Notification, NotificationsData
 
 
 @login_required
@@ -24,8 +25,14 @@ def task_post(community_id, album_id):
     tasks.album_id = album_id
     tasks.user_id = str(g.user.id)
     tasks.album_name = dict(albums).get('title')
-
     tasks.save()
+
+    notification = Notification()
+    notification.user = g.user
+    notification.type = 'TaskAdded'
+    notification.parent = NotificationsData()
+    notification.parent.task = tasks
+    notification.save()
 
     res = download_album(user_id=str(g.user.id), community_id=community_id, album_id=album_id, task_id=str(tasks.id))
 
