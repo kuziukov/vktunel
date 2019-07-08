@@ -13,7 +13,7 @@ from models import Users
 from api.auth.session import (
     create_session
 )
-from api.auth.jwt import Token
+from api.auth.token import Token
 from cores.vk import API
 
 
