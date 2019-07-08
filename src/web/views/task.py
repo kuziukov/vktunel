@@ -1,19 +1,19 @@
 from flask import render_template, redirect, url_for, g
-from decorators.login_required import login_required
 from models.tasks import Tasks
 from extentions.celery import download_album
 from vk import API
 from utils import convert_size
 from models.notification import Notification, NotificationsData
+from api.auth.decorators import web_login_required
 
 
-@login_required
+@web_login_required
 def task_page():
     tasks = Tasks.objects(user=g.user).order_by('-created_at').all()
     return render_template('task_page.html', tasks=tasks, convert_size=convert_size)
 
 
-@login_required
+@web_login_required
 def task_post(community_id, album_id):
 
     api = API(g.user.access_token, v=5.95)
