@@ -3,7 +3,8 @@ from rest_core import Api
 
 from .resources.notification import (
     NotificationsGet,
-    NotificationUpdate
+    NotificationUpdate,
+    NotificationDelete
 )
 
 
@@ -13,3 +14,4 @@ api = Api(api_bp)
 
 api.add_resource(NotificationsGet, '/notifications')
 api.add_resource(NotificationUpdate, '/notification/<string:notification_id>')
+api.add_resource(NotificationDelete, '/notification/<string:notification_id>')

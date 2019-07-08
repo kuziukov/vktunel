@@ -22,7 +22,6 @@ class Notification(Document):
     type = StringField(default=None)
     created_at = DateTimeField(default=datetime.now)
     parent = EmbeddedDocumentField(NotificationsData)
-    hide = BooleanField(default=False)
 
     meta = {
         'collection': 'notifications'
