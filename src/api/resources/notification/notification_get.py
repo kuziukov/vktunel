@@ -16,6 +16,6 @@ class NotificationsGet(Resource):
     @login_required
     def get(self):
         user = self.g.user
-        notifications = Notification.objects(user=user)
+        notifications = Notification.objects(user=user, hide=False)
 
         return SerializationSchema().serialize({'items': notifications, 'totals': notifications.count()})

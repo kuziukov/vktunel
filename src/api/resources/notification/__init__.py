@@ -1,1 +1,2 @@
 from .notification_get import NotificationsGet
+from .notification_update import NotificationUpdate
