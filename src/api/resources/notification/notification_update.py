@@ -3,9 +3,10 @@ from werkzeug.exceptions import NotFound
 
 from api.auth.decorators import login_required
 from api.resources.notification.schemas import NotificationSchema
-from marshmallow_core import fields, ApiSchema
+from cores.marshmallow_core import ApiSchema
+from cores.marshmallow_core import fields
 from models.notification import Notification
-from rest_core import Resource
+from cores.rest_core import Resource
 
 
 class DeserializationSchema(ApiSchema):

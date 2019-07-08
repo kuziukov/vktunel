@@ -1,7 +1,7 @@
 from flask import render_template, redirect, url_for, g
 from models.tasks import Tasks
 from extentions.celery import download_album
-from vk import API
+from cores.vk import API
 from utils import convert_size
 from models.notification import Notification, NotificationsData
 from api.auth.decorators import web_login_required

@@ -1,6 +1,6 @@
 from flask import render_template, g
 from api.auth.decorators import web_login_required
-from vk import API
+from cores.vk import API
 
 
 @web_login_required

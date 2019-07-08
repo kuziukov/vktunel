@@ -1,4 +1,5 @@
-from marshmallow_core import ApiSchema, fields
+from cores.marshmallow_core import ApiSchema
+from cores.marshmallow_core import fields
 
 
 class TaskSchema(ApiSchema):

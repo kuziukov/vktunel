@@ -3,7 +3,7 @@ from werkzeug.exceptions import NotFound
 from api.auth.decorators import login_required
 from api.resources.notification.schemas import NotificationSchema
 from models.notification import Notification
-from rest_core import Resource
+from cores.rest_core import Resource
 
 
 class NotificationDelete(Resource):
