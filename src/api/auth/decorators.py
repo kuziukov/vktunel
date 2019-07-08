@@ -22,7 +22,7 @@ def login_required(function):
 
     @wraps(function)
     def wrapped(*args, **kwargs):
-        token = request.headers.get('access_token')
+        token = request.headers.get('X-Auth-Token')
         if token is None:
             raise UserNotAuthorized()
 
