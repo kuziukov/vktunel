@@ -5,7 +5,7 @@ from flask import (
 from jwt import DecodeError, ExpiredSignatureError
 from mongoengine import DoesNotExist, ValidationError
 
-from auth import Token
+from .jwt import Token
 from models import Users
 from models.tasks import Tasks
 

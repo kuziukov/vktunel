@@ -10,10 +10,10 @@ from objects.vk_access import (
     VKAccessResponse
 )
 from models import Users
-from auth.session import (
+from api.auth.session import (
     create_session
 )
-from auth.jwt import Token
+from api.auth.jwt import Token
 from vk import API
 
 

@@ -8,7 +8,7 @@ from flask import (
 from jwt import DecodeError, ExpiredSignatureError
 from mongoengine import DoesNotExist, ValidationError
 
-from auth.jwt import Token
+from api.auth.jwt import Token
 from models import Users
 
 

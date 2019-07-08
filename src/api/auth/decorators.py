@@ -2,9 +2,7 @@ from functools import wraps
 from flask import request, g
 from jwt import DecodeError, ExpiredSignatureError
 from mongoengine import DoesNotExist, ValidationError
-from werkzeug.exceptions import Unauthorized
-
-from auth import Token
+from .jwt import Token
 from models import Users
 from rest_core import APIException, codes
 
