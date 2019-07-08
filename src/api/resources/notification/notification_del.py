@@ -9,9 +9,9 @@ from rest_core import Resource
 class NotificationDelete(Resource):
     @login_required
     def delete(self, notification_id):
-
+        user = self.g.user
         try:
-            notify = Notification.objects.get(id=notification_id)
+            notify = Notification.objects.get(id=notification_id, user=user)
         except (DoesNotExist, ValidationError):
             raise NotFound()
 

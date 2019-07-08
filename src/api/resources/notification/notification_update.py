@@ -17,10 +17,11 @@ class NotificationUpdate(Resource):
 
     @login_required
     def put(self, notification_id):
+        user = self.g.user
         data = DeserializationSchema().deserialize(self.request.json)
 
         try:
-            notify = Notification.objects.get(id=notification_id)
+            notify = Notification.objects.get(id=notification_id, user=user)
         except (DoesNotExist, ValidationError):
             raise NotFound()
 
