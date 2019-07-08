@@ -12,6 +12,8 @@ class FiltersSchema(ApiSchema):
 
     start = fields.Int(default=None, missing=0, validate=Range(min=0))
     limit = fields.Int(default=None, missing=50, validate=Range(min=0))
+    start_time = fields.Timestamp(default=None)
+    end_time = fields.Timestamp(default=None)
 
 
 class SerializationSchema(ApiSchema):
@@ -27,7 +29,16 @@ class NotificationsGet(Resource):
     def get(self):
         filters = FiltersSchema().deserialize(self.request.args, unknown=EXCLUDE)
         user = self.g.user
-        notifications = Notification.objects(user=user)
+
+        query_kwargs = {}
+
+        if 'start_time' in filters:
+            query_kwargs['created_at__gte'] = filters['start_time']
+
+        if 'end_time' in filters:
+            query_kwargs['created_at__lte'] = filters['end_time']
+
+        notifications = Notification.objects(user=user).filter(**query_kwargs)
         items = notifications.skip(filters['start']).limit(filters['limit'])
 
         return SerializationSchema().serialize({'items': items, 'totals': len(items), 'filters': filters})
