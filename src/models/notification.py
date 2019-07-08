@@ -4,7 +4,8 @@ from mongoengine import (
     DateTimeField,
     ReferenceField,
     EmbeddedDocumentField,
-    EmbeddedDocument
+    EmbeddedDocument,
+    BooleanField
 )
 from datetime import datetime
 from .users import Users
@@ -21,6 +22,7 @@ class Notification(Document):
     type = StringField(default=None)
     created_at = DateTimeField(default=datetime.now)
     parent = EmbeddedDocumentField(NotificationsData)
+    hide = BooleanField(default=False)
 
     meta = {
         'collection': 'notifications'
