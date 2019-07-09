@@ -62,11 +62,10 @@ function requestPermission() {
     return true;
 }
 
-
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('static/js/sw.js')
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('static/js/sw.js')
         .then(function() {
-          console.log('SW registered');
-          requestPermission()
+            console.log('SW registered');
+            requestPermission()
         });
-    }
+}
