@@ -38,6 +38,7 @@ CELERY_SETTINGS = dict(
     BROKER_URL=f'amqp://{RABBIT_USER}:{RABBIT_PASS}@{RABBIT_HOST}:{RABBIT_PORT}//',
     CELERY_ROUTES={
         'download-album': {'queue': 'common'},
+        'fcm-notification': {'queue': 'common'},
     },
 )
 
