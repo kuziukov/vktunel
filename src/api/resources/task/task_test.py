@@ -17,9 +17,7 @@ class SerializationSchema(ApiSchema):
 class TasksTest(Resource):
 
     @login_required
-    def post(self, user_id):
-
-        subscription = self.request.json
+    def post(self):
 
         data = json.dumps({
             'title': 'Мы скачали ваш альбом',

@@ -24,6 +24,6 @@ api.add_resource(NotificationUpdate, '/notification/<string:notification_id>')
 api.add_resource(NotificationDelete, '/notification/<string:notification_id>')
 
 api.add_resource(TasksGet, '/tasks')
-api.add_resource(TasksTest, '/tasks/<string:user_id>')
+api.add_resource(TasksTest, '/tasks')
 
 api.add_resource(FCMSubscriptionPost, '/subscription/fcm')
