@@ -7,7 +7,7 @@ from mongoengine import (
 from models import Users
 
 
-class FCMSubscription(Document):
+class FcmSubscription(Document):
     user = ReferenceField(Users, required=True)
     subscription = DictField(required=True, unique=True)
 

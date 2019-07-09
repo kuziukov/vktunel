@@ -5,7 +5,7 @@ from cores.marshmallow_core import ApiSchema
 from cores.marshmallow_core import fields
 from cores.rest_core import Resource
 from pywebpush import webpush, WebPushException
-from models.subscription_fcm import FCMSubscription
+from models.subscription_fcm import FcmSubscription
 
 
 class SerializationSchema(ApiSchema):
@@ -20,11 +20,11 @@ class TasksTest(Resource):
     def post(self):
 
         data = json.dumps({
-            'title': 'Мы скачали ваш альбом',
-            'body': 'Привет, мы загрузили ваш альбом, ждем вас най сайте',
+            'title': 'Мы загрузили ваш альбом',
+            'body': 'Привет, мы скачали ваш альбом, ждем вас у нас на сайте',
         })
 
-        notifications = FCMSubscription.objects(user=self.g.user)
+        notifications = FcmSubscription.objects(user=self.g.user)
         for notify in notifications:
             try:
                 webpush(

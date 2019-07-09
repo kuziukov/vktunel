@@ -11,7 +11,7 @@ from .resources.task import (
     TasksTest
 )
 from .resources.subscription import (
-    FCMSubscriptionPost
+    FcmSubscriptionPost
 )
 
 
@@ -26,4 +26,4 @@ api.add_resource(NotificationDelete, '/notification/<string:notification_id>')
 api.add_resource(TasksGet, '/tasks')
 api.add_resource(TasksTest, '/tasks')
 
-api.add_resource(FCMSubscriptionPost, '/subscription/fcm')
+api.add_resource(FcmSubscriptionPost, '/subscription/fcm')

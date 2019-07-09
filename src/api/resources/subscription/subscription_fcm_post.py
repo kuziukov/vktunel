@@ -4,15 +4,15 @@ from api.auth.decorators import login_required
 from api.resources.subscription.schemas import FCMSubscriptionSchema
 from cores.marshmallow_core import ApiSchema
 from cores.marshmallow_core import fields
-from models.subscription_fcm import FCMSubscription
+from models.subscription_fcm import FcmSubscription
 from cores.rest_core import Resource, APIException, codes
 
 
-class FCMToken_Exception(APIException):
+class FcmTokenException(APIException):
 
     @property
     def message(self):
-        return 'Sorry, but this token may be already exists'
+        return 'Sorry, fcm token already exists.'
 
     code = codes.BAD_REQUEST
 
@@ -29,20 +29,20 @@ class DeserializationSchema(ApiSchema):
     keys = fields.Nested(KeysSchema, required=True)
 
 
-class FCMSubscriptionPost(Resource):
+class FcmSubscriptionPost(Resource):
 
     @login_required
     def post(self):
         user = self.g.user
         data = DeserializationSchema().deserialize(self.request.json)
 
-        subscription = FCMSubscription()
+        subscription = FcmSubscription()
         subscription.subscription = data
         subscription.user = user
 
         try:
             subscription.save()
         except NotUniqueError:
-            raise FCMToken_Exception()
+            raise FcmTokenException()
 
         return FCMSubscriptionSchema().serialize(subscription)
