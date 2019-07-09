@@ -10,7 +10,9 @@ from .resources.task import (
     TasksGet,
     TasksTest
 )
-from .resources.fcm_subscription.fcm_subscription_post import FCMSubscriptionPost
+from .resources.subscription import (
+    FCMSubscriptionPost
+)
 
 
 api_bp = Blueprint('api', __name__, url_prefix='/v1.0', template_folder='./templates')
@@ -22,7 +24,6 @@ api.add_resource(NotificationUpdate, '/notification/<string:notification_id>')
 api.add_resource(NotificationDelete, '/notification/<string:notification_id>')
 
 api.add_resource(TasksGet, '/tasks')
-
 api.add_resource(TasksTest, '/tasks/<string:user_id>')
 
 api.add_resource(FCMSubscriptionPost, '/subscription/fcm')

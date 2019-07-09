@@ -1,10 +1,10 @@
 from mongoengine import NotUniqueError
 
 from api.auth.decorators import login_required
-from api.resources.fcm_subscription.schemas import FCMSubscriptionSchema
+from api.resources.subscription.schemas import FCMSubscriptionSchema
 from cores.marshmallow_core import ApiSchema
 from cores.marshmallow_core import fields
-from models.fcm_subscription import FCMSubscription
+from models.subscription_fcm import FCMSubscription
 from cores.rest_core import Resource, APIException, codes
 
 

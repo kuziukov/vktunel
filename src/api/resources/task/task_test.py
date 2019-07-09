@@ -5,7 +5,7 @@ from cores.marshmallow_core import ApiSchema
 from cores.marshmallow_core import fields
 from cores.rest_core import Resource
 from pywebpush import webpush, WebPushException
-from models.fcm_subscription import FCMSubscription
+from models.subscription_fcm import FCMSubscription
 
 
 class SerializationSchema(ApiSchema):
@@ -37,15 +37,6 @@ class TasksTest(Resource):
                         'sub': 'mailto:{}'.format('dsadas@gmail.com'),
                     }
                 )
-            except WebPushException as ex:
-                print('I\'m sorry, Dave, but I can\'t do that: {}'.format(repr(ex)))
-                print(ex)
-                # Mozilla returns additional information in the body of the response.
-                if ex.response and ex.response.json():
-                    extra = ex.response.json()
-                    print('Remote service replied with a {}:{}, {}',
-                          extra.code,
-                          extra.errno,
-                          extra.message
-                          )
+            except WebPushException:
+                notify.delete()
         return
