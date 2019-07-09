@@ -1,11 +1,11 @@
 self.addEventListener('push', function(event) {
-  var message = JSON.parse(event.data.text()); //
-  event.waitUntil(
-    self.registration.showNotification(message.title, {
-        body: message.body,
-        icon: 'http://localhost:5000/static/clouds.png'
-    })
-  );
+    var message = JSON.parse(event.data.text()); //
+    event.waitUntil(
+        self.registration.showNotification(message.title, {
+            body: message.body,
+            icon: 'http://localhost:5000/static/clouds.png'
+        })
+    );
 });
 
 
@@ -16,20 +16,20 @@ self.addEventListener('push', function(event) {
 // На боевом приложении скорее всего будет использоваться ID или token
 // для идентификации пользователя.
 self.addEventListener('pushsubscriptionchange', function(event) {
-  console.log('Spell expired');
-  event.waitUntil(
-    self.registration.pushManager.subscribe({ userVisibleOnly: true })
-    .then(function(subscription) {
-      console.log('Another invade! Legilimens!', subscription.endpoint);
-      return fetch('register', {
-        method: 'post',
-        headers: {
-          'Content-type': 'application/json'
-        },
-        body: JSON.stringify({
-          endpoint: subscription.endpoint
-        })
-      });
-    })
-  );
+    console.log('Spell expired');
+    event.waitUntil(
+        self.registration.pushManager.subscribe({ userVisibleOnly: true })
+            .then(function(subscription) {
+                console.log('Another invade! Legilimens!', subscription.endpoint);
+                return fetch('register', {
+                    method: 'post',
+                    headers: {
+                        'Content-type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        endpoint: subscription.endpoint
+                    })
+                });
+            })
+    );
 });
