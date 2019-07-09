@@ -3,7 +3,7 @@ self.addEventListener('push', function(event) {
   event.waitUntil(
     self.registration.showNotification(message.title, {
         body: message.body,
-        icon: 'http://localhost:5000/static_folder/clouds.png'
+        icon: 'http://localhost:5000/static/clouds.png'
     })
   );
 });
