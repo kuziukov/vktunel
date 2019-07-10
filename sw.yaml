@@ -10,12 +10,37 @@ securityDefinitions:
   ApiKeyAuth:
     type: apiKey
     in: header
-    name: X-Auth-Token
+    name: Authorization
 consumes:
   - application/json
 host: localhost:5000
 basePath: /v1.0
 paths:
+  '/authorization/code':
+    post:
+      tags:
+        - account
+      summary: Запрос на регистрацию пользователя
+      produces:
+        - application/json
+      operationId: register_user
+      parameters:
+        - name: json
+          in: body
+          description: Данные пользователя для регистрации
+          required: true
+          schema:
+            type: object
+            required:
+              - code
+            properties:
+              code:
+                type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/response'
   '/tasks':
     get:
       tags:
