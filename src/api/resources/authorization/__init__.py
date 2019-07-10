@@ -1,1 +1,1 @@
-from .authorization_vk_code import AuthorizationVkCode
+from .authorization_access import AuthorizationAccessToken
