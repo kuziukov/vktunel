@@ -19,7 +19,7 @@ from .env import (
 
 CLIENT_ID = '7029024'
 CLIENT_SECRET = '7DctKcRPCw28VykYBslv'
-REDIRECT_URL = 'http://localhost:5000/callback'
+REDIRECT_URL = 'http://localhost:8080/callback'
 
 
 MONGODB_SETTINGS = {
