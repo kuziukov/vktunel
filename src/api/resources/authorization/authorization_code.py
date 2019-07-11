@@ -24,7 +24,7 @@ class DeserializationSchema(ApiSchema):
     code = fields.Str(required=True)
 
 
-class AuthorizationVkCode(Resource):
+class AuthorizationCode(Resource):
 
     def post(self):
         data = DeserializationSchema().deserialize(self.request.json)
@@ -36,8 +36,12 @@ class AuthorizationVkCode(Resource):
 
             users = Users()
             users.access_token = response['access_token']
-            expires_in = 2629744 if response['expires_in'] == 0 else response['expires_in']
             users.user_id = str(response['user_id'])
+
+            if response['expires_in'] == 0:
+                expires_in = 2629744
+            else:
+                expires_in = response['expires_in']
 
             api = API(users.access_token, v=5.95)
             response = api.users.get()[0]

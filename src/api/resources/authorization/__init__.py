@@ -1,1 +1,1 @@
-from .authorization_access import AuthorizationAccessToken
+from .authorization_code import AuthorizationCode
