@@ -56,6 +56,50 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/response'
+  '/community/{communityId}/albums':
+    get:
+      tags:
+        - albums
+      summary: Запрос на получение всех альбомов сообщества
+      operationId: albums_get
+      parameters:
+        - name: communityId
+          in: path
+          required: true
+          type: string
+      security:
+        - ApiKeyAuth: []
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/response'
+  '/community/{communityId}/albums/{albumId}':
+    get:
+      tags:
+        - albums
+      summary: Запрос на постановку задачи на загрузку альбома
+      operationId: albums_post
+      parameters:
+        - name: communityId
+          in: path
+          required: true
+          type: string
+        - name: albumId
+          in: path
+          required: true
+          type: string
+      security:
+        - ApiKeyAuth: []
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/response'
   '/tasks':
     get:
       tags:
