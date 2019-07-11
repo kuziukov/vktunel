@@ -130,6 +130,21 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/response'
+  '/users':
+    get:
+      tags:
+        - users
+      summary: Запрос на получение пользователя
+      operationId: users_get
+      security:
+        - ApiKeyAuth: []
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/response'
 definitions:
   response:
     type: object
