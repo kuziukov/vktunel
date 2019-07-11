@@ -19,12 +19,17 @@ from .resources.authorization import (
 from .resources.users import (
     UserGet
 )
+from .resources.community import (
+    CommunityGet
+)
 
 api_bp = Blueprint('api', __name__, url_prefix='/v1.0', template_folder='./templates')
 
 api = Api(api_bp)
 
 api.add_resource(AuthorizationCode, '/authorization/code')
+
+api.add_resource(CommunityGet, '/community')
 
 api.add_resource(NotificationsGet, '/notifications')
 api.add_resource(NotificationUpdate, '/notification/<string:notification_id>')

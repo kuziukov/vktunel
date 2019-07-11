@@ -41,6 +41,21 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/response'
+  '/community':
+    get:
+      tags:
+        - community
+      summary: Запрос на получение всех сообществ
+      operationId: community_get
+      security:
+        - ApiKeyAuth: []
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/response'
   '/tasks':
     get:
       tags:
