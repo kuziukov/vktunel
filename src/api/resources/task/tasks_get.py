@@ -17,6 +17,6 @@ class TasksGet(Resource):
     @login_required
     def get(self):
         user = self.g.user
-        tasks = Tasks.objects(user=user)
+        tasks = Tasks.objects(user=user).order_by('-created_at').all()
 
         return SerializationSchema().serialize({'items': tasks, 'totals': tasks.count()})
