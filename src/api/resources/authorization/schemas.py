@@ -5,3 +5,4 @@ from cores.marshmallow_core import fields
 class AuthorizationSchema(ApiSchema):
 
     access_token = fields.Str(default=None)
+    expires_in = fields.Timestamp(default=None)

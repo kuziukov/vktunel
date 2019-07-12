@@ -12,7 +12,7 @@ from cores.rest_core import Resource
 
 class SerializationSchema(ApiSchema):
 
-    task = fields.Nested(TaskSchema, many=True)
+    task = fields.Nested(TaskSchema)
     taskId = fields.Str(default=None)
 
 

@@ -110,6 +110,17 @@ paths:
         - ApiKeyAuth: []
       produces:
         - application/json
+      parameters:
+        - $ref: '#/parameters/start'
+        - $ref: '#/parameters/limit'
+        - name: start_time
+          in: query
+          default: null
+          type: number
+        - name: end_time
+          in: query
+          default: null
+          type: number
       responses:
         '200':
           description: OK

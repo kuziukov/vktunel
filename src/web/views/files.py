@@ -1,7 +1,5 @@
-from flask import make_response, Response, stream_with_context, current_app, g
-from gridfs import GridFSBucket
+from flask import Response, stream_with_context
 from mongoengine import DoesNotExist, ValidationError
-from pymongo import MongoClient
 from werkzeug.exceptions import NotFound
 from models.tasks import Tasks
 

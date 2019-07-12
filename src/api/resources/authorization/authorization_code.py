@@ -14,7 +14,7 @@ class AuthorizationCodeException(APIException):
 
     @property
     def message(self):
-        return 'Sorry, authorization code is invalid.'
+        return 'Invalid Authorization Code'
 
     code = codes.BAD_REQUEST
 
@@ -57,7 +57,8 @@ class AuthorizationCode(Resource):
             access_token, expires_in = Token(session_id=session.key, user_id=users.id).generate(expires_in)
 
             response = {
-                'access_token': access_token
+                'access_token': access_token,
+                'expires_in': expires_in
             }
         else:
             raise AuthorizationCodeException()

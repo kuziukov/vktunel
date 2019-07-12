@@ -37,8 +37,6 @@ api.add_resource(CommunityGet, '/community')
 api.add_resource(AlbumGet, '/community/<string:community_id>/albums')
 api.add_resource(TasksPost, '/community/<string:community_id>/albums/<string:album_id>')
 
-#api.add_resource(None, '/files/<string:task_id>')
-
 api.add_resource(NotificationsGet, '/notifications')
 api.add_resource(NotificationUpdate, '/notification/<string:notification_id>')
 api.add_resource(NotificationDelete, '/notification/<string:notification_id>')
