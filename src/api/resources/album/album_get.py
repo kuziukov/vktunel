@@ -3,8 +3,17 @@ from api.auth.decorators import login_required
 from api.resources.album.schemas import AlbumSchema
 from cores.marshmallow_core import ApiSchema
 from cores.marshmallow_core import fields
-from cores.rest_core import Resource
+from cores.rest_core import Resource, APIException, codes
 from cores.vk import API, VkAPIError
+
+
+class AccessDenied(APIException):
+
+    @property
+    def message(self):
+        return 'Access denied: group photos are disabled'
+
+    code = codes.BAD_REQUEST
 
 
 class FiltersSchema(ApiSchema):
@@ -28,14 +37,15 @@ class AlbumGet(Resource):
     def get(self, community_id):
         user = self.g.user
 
+        print(community_id)
+
         api = API(user.access_token, v=5.95)
-        community = api.groups.getById(group_id=community_id)[0]
+        # community = api.groups.getById(group_id=community_id)[0]
         try:
-            response = api.photos.getAlbums(owner_id=f'-{community_id}', need_covers=1)
+            response = api.photos.getAlbums(owner_id=community_id, need_system=1, need_covers=1)
             albums = response['items']
             count = response['count']
         except VkAPIError:
-            albums = []
-            count = 0
+            raise AccessDenied()
 
         return SerializationSchema().serialize({'items': albums, 'totals': count})

@@ -30,13 +30,18 @@ from .resources.album import (
 api_bp = Blueprint('api', __name__, url_prefix='/v1.0', template_folder='./templates')
 api = Api(api_bp)
 
-
+# Authorization
 api.add_resource(AuthorizationCode, '/authorization/code')
 
-api.add_resource(CommunityGet, '/community')
+# Community
+api.add_resource(CommunityGet, '/communities')
+
+# Albums
 api.add_resource(AlbumGet, '/community/<string:community_id>/albums')
+
 api.add_resource(TasksPost, '/community/<string:community_id>/albums/<string:album_id>')
 
+# Notifications
 api.add_resource(NotificationsGet, '/notifications')
 api.add_resource(NotificationUpdate, '/notification/<string:notification_id>')
 api.add_resource(NotificationDelete, '/notification/<string:notification_id>')
