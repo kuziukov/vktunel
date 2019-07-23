@@ -1,1 +1,1 @@
-from .album_get import AlbumGet
+from .community_albums_get import CommunityAlbumsGet

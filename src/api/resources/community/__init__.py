@@ -1,1 +1,1 @@
-from .community_get import CommunityGet
+from .community_get import CommunitiesGet

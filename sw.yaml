@@ -19,7 +19,7 @@ paths:
   '/authorization/code':
     post:
       tags:
-        - account
+        - authorization
       summary: Запрос на регистрацию пользователя
       produces:
         - application/json
@@ -41,12 +41,32 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/response'
-  '/community':
+  '/communities':
     get:
       tags:
         - community
       summary: Запрос на получение всех сообществ
+      operationId: communities_get
+      security:
+        - ApiKeyAuth: []
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/response'
+  '/community/{communityId}':
+    get:
+      tags:
+        - community
+      summary: Запрос на получение сообщества
       operationId: community_get
+      parameters:
+        - name: communityId
+          in: path
+          required: true
+          type: string
       security:
         - ApiKeyAuth: []
       produces:
@@ -64,30 +84,6 @@ paths:
       operationId: albums_get
       parameters:
         - name: communityId
-          in: path
-          required: true
-          type: string
-      security:
-        - ApiKeyAuth: []
-      produces:
-        - application/json
-      responses:
-        '200':
-          description: OK
-          schema:
-            $ref: '#/definitions/response'
-  '/community/{communityId}/albums/{albumId}':
-    get:
-      tags:
-        - albums
-      summary: Запрос на постановку задачи на загрузку альбома
-      operationId: albums_post
-      parameters:
-        - name: communityId
-          in: path
-          required: true
-          type: string
-        - name: albumId
           in: path
           required: true
           type: string
@@ -126,6 +122,34 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/response'
+    post:
+      tags:
+        - tasks
+      summary: Запрос на постановку задачи на загрузку альбома
+      operationId: task_post
+      parameters:
+        - name: json
+          in: body
+          required: true
+          schema:
+            type: object
+            properties:
+              subject_id:
+                type: string
+              album_id:
+                type: string
+            required:
+              - community_id
+              - album_id
+      security:
+        - ApiKeyAuth: []
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/response'
   '/notifications':
     get:
       tags:
@@ -153,38 +177,10 @@ paths:
           schema:
             $ref: '#/definitions/response'
   '/notification/{notificationId}':
-    put:
-      tags:
-        - notifications
-      summary: Запрос на изменение уведомления
-      security:
-        - ApiKeyAuth: []
-      produces:
-        - application/json
-      operationId: notification_update
-      parameters:
-        - name: notificationId
-          in: path
-          required: true
-          type: string
-        - name: json
-          in: body
-          required: true
-          schema:
-            type: object
-            properties:
-              hide:
-                type: boolean
-                default: false
-      responses:
-        '200':
-          description: OK
-          schema:
-            $ref: '#/definitions/response'
     delete:
       tags:
         - notifications
-      summary: Запрос на регистрацию приложения
+      summary: Запрос на удаление уведомления
       produces:
         - application/json
       operationId: notification_delete
@@ -200,12 +196,32 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/response'
-  '/users':
+  '/profile':
     get:
       tags:
-        - users
+        - profile
       summary: Запрос на получение пользователя
-      operationId: users_get
+      operationId: profile_get
+      security:
+        - ApiKeyAuth: []
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/response'
+  '/profile/{profileId}/albums':
+    get:
+      tags:
+        - albums
+      summary: Запрос на получение альбомов пользователя
+      operationId: profileAlbums_get
+      parameters:
+        - name: profileId
+          in: path
+          required: true
+          type: string
       security:
         - ApiKeyAuth: []
       produces:

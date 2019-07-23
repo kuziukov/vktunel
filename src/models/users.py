@@ -10,5 +10,5 @@ class Users(Document):
     access_token = StringField(required=True)
 
     meta = {
-        'collection': 'users'
+        'collection': 'profile'
     }

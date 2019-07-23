@@ -23,7 +23,7 @@ class SerializationSchema(ApiSchema):
     filters = fields.Nested(FiltersSchema)
 
 
-class CommunityGet(Resource):
+class CommunitiesGet(Resource):
 
     @login_required
     def get(self):

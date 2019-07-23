@@ -9,7 +9,7 @@ from .resources.notification import (
 from .resources.task import (
     TasksGet,
     TasksTest,
-    TasksPost
+    TaskPost
 )
 from .resources.subscription import (
     FcmSubscriptionPost
@@ -17,14 +17,14 @@ from .resources.subscription import (
 from .resources.authorization import (
     AuthorizationCode
 )
-from .resources.users import (
-    UserGet
+from .resources.profile import (
+    ProfileGet
 )
 from .resources.community import (
-    CommunityGet
+    CommunitiesGet
 )
 from .resources.album import (
-    AlbumGet
+    CommunityAlbumsGet
 )
 
 api_bp = Blueprint('api', __name__, url_prefix='/v1.0', template_folder='./templates')
@@ -34,12 +34,13 @@ api = Api(api_bp)
 api.add_resource(AuthorizationCode, '/authorization/code')
 
 # Community
-api.add_resource(CommunityGet, '/communities')
+api.add_resource(CommunitiesGet, '/communities')
+# community/{communityId}
 
 # Albums
-api.add_resource(AlbumGet, '/community/<string:community_id>/albums')
+api.add_resource(CommunityAlbumsGet, '/community/<string:community_id>/albums')
+# /profile/<string:profile_id>/albums
 
-api.add_resource(TasksPost, '/community/<string:community_id>/albums/<string:album_id>')
 
 # Notifications
 api.add_resource(NotificationsGet, '/notifications')
@@ -47,8 +48,8 @@ api.add_resource(NotificationUpdate, '/notification/<string:notification_id>')
 api.add_resource(NotificationDelete, '/notification/<string:notification_id>')
 
 api.add_resource(TasksGet, '/tasks')
-api.add_resource(TasksTest, '/tasks')
+api.add_resource(TaskPost, '/tasks')
 
 api.add_resource(FcmSubscriptionPost, '/subscription/fcm')
 
-api.add_resource(UserGet, '/users')
+api.add_resource(ProfileGet, '/profile')

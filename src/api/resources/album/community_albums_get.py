@@ -31,7 +31,7 @@ class SerializationSchema(ApiSchema):
     filters = fields.Nested(FiltersSchema)
 
 
-class AlbumGet(Resource):
+class CommunityAlbumsGet(Resource):
 
     @login_required
     def get(self, community_id):

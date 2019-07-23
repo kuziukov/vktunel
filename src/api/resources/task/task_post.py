@@ -10,17 +10,28 @@ from models.tasks import Tasks
 from cores.rest_core import Resource
 
 
+class DeserializationSchema(ApiSchema):
+
+    community_id = fields.Str(required=True)
+    album_id = fields.Str(required=True)
+
+
 class SerializationSchema(ApiSchema):
 
     task = fields.Nested(TaskSchema)
     taskId = fields.Str(default=None)
 
 
-class TasksPost(Resource):
+class TaskPost(Resource):
 
     @login_required
-    def get(self, community_id, album_id):
+    def post(self):
         user = g.user
+        data = DeserializationSchema().deserialize(self.request.json)
+
+        community_id = data['community_id']
+        album_id = data['album_id']
+
         api = API(user.access_token, v=5.95)
         response = api.photos.getAlbums(owner_id=f'-{community_id}', need_covers=1, album_ids=album_id)
         albums = response['items'][0]
