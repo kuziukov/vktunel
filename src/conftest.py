@@ -33,7 +33,7 @@ def init_database():
     #db.session.add(user1)
     #db.session.add(user2)
 
-    # Commit the changes for the users
+    # Commit the changes for the profile
     #db.session.commit()
 
     #yield db  # this is where the testing happens!

@@ -1,11 +1,11 @@
 from marshmallow import EXCLUDE
 from marshmallow.validate import Range
 from api.auth.decorators import login_required
-from api.resources.task import TaskSchema
+from api.resources.community.schemas import CommunitySchema
 from cores.marshmallow_core import ApiSchema
 from cores.marshmallow_core import fields
-from models.tasks import Tasks
 from cores.rest_core import Resource
+from cores.vk import API
 
 
 class FiltersSchema(ApiSchema):
@@ -18,16 +18,17 @@ class FiltersSchema(ApiSchema):
 
 class SerializationSchema(ApiSchema):
 
-    items = fields.Nested(TaskSchema, many=True)
+    items = fields.Nested(CommunitySchema, many=True)
     totals = fields.Int()
+    filters = fields.Nested(FiltersSchema)
 
 
-class TasksGet(Resource):
+class CommunitiesGet(Resource):
 
     @login_required
     def get(self):
-        user = self.g.user
         filters = FiltersSchema().deserialize(self.request.args, unknown=EXCLUDE)
+        user = self.g.user
 
         query_kwargs = {}
 
@@ -37,7 +38,10 @@ class TasksGet(Resource):
         if 'end_time' in filters:
             query_kwargs['created_at__lte'] = filters['end_time']
 
-        tasks = Tasks.objects(user=user).filter(**query_kwargs)
-        items = tasks.skip(filters['start']).limit(filters['limit'])
+        api = API(user.access_token, v=5.95)
+        response = api.groups.get(extended=1)
 
-        return SerializationSchema().serialize({'items': items, 'totals': items.count()})
+        community = response['items']
+        count = response['count']
+
+        return SerializationSchema().serialize({'items': community, 'totals': count, 'filters': filters})
