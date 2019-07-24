@@ -21,10 +21,12 @@ from .resources.profile import (
     ProfileGet
 )
 from .resources.community import (
-    CommunitiesGet
+    CommunitiesGet,
+    CommunityGet
 )
 from .resources.album import (
-    CommunityAlbumsGet
+    CommunityAlbumsGet,
+    UserAlbumsGet
 )
 
 api_bp = Blueprint('api', __name__, url_prefix='/v1.0', template_folder='./templates')
@@ -35,11 +37,12 @@ api.add_resource(AuthorizationCode, '/authorization/code')
 
 # Community
 api.add_resource(CommunitiesGet, '/communities')
-# community/{communityId}
+api.add_resource(CommunityGet, '/community/<string:community_id>')
+
 
 # Albums
 api.add_resource(CommunityAlbumsGet, '/community/<string:community_id>/albums')
-# /profile/<string:profile_id>/albums
+api.add_resource(UserAlbumsGet, '/profile/<string:profile_id>/albums')
 
 
 # Notifications

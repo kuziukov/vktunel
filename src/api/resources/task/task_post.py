@@ -7,12 +7,12 @@ from cores.vk import API
 from extentions.celery import download_album
 from models.notification import Notification, NotificationsData
 from models.tasks import Tasks
-from cores.rest_core import Resource
+from cores.rest_core import Resource, APIException, codes
 
 
 class DeserializationSchema(ApiSchema):
 
-    community_id = fields.Str(required=True)
+    subject_id = fields.Str(required=True)
     album_id = fields.Str(required=True)
 
 
@@ -22,6 +22,24 @@ class SerializationSchema(ApiSchema):
     taskId = fields.Str(default=None)
 
 
+class SubjectIdException(APIException):
+
+    @property
+    def message(self):
+        return 'Subject id exception, please try again later'
+
+    code = codes.BAD_REQUEST
+
+
+class AlbumsException(APIException):
+
+    @property
+    def message(self):
+        return 'Albums exception, please try again later'
+
+    code = codes.BAD_REQUEST
+
+
 class TaskPost(Resource):
 
     @login_required
@@ -29,15 +47,33 @@ class TaskPost(Resource):
         user = g.user
         data = DeserializationSchema().deserialize(self.request.json)
 
-        community_id = data['community_id']
+        subject_id = data['subject_id']
         album_id = data['album_id']
 
         api = API(user.access_token, v=5.95)
-        response = api.photos.getAlbums(owner_id=f'-{community_id}', need_covers=1, album_ids=album_id)
+
+        try:
+            utils = api.utils.resolveScreenName(screen_name=subject_id)
+        except Exception:
+            raise SubjectIdException()
+        finally:
+            if not utils:
+                raise SubjectIdException()
+
+        if utils['type'] == 'user':
+            subject_id = utils['object_id']
+        elif utils['type'] == 'group':
+            subject_id = f"-{utils['object_id']}"
+
+        try:
+            response = api.photos.getAlbums(owner_id=subject_id, need_covers=1, album_ids=album_id)
+        except Exception:
+            raise AlbumsException()
+
         albums = response['items'][0]
 
         tasks = Tasks()
-        tasks.community_id = community_id
+        tasks.community_id = str(subject_id)
         tasks.album_id = album_id
         tasks.user = g.user
         tasks.album_name = dict(albums).get('title')
@@ -50,7 +86,7 @@ class TaskPost(Resource):
         notification.parent.task = tasks
         notification.save()
 
-        res = download_album(user_id=str(g.user.id), community_id=community_id, album_id=album_id,
+        res = download_album(user_id=str(g.user.id), community_id=subject_id, album_id=album_id,
                              task_id=str(tasks.id))
 
         response = {

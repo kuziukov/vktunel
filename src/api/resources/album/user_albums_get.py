@@ -11,7 +11,7 @@ class AccessDenied(APIException):
 
     @property
     def message(self):
-        return 'Access denied: group photos are disabled'
+        return 'Access denied: users photos are disabled'
 
     code = codes.BAD_REQUEST
 
@@ -31,18 +31,15 @@ class SerializationSchema(ApiSchema):
     filters = fields.Nested(FiltersSchema)
 
 
-class CommunityAlbumsGet(Resource):
+class UserAlbumsGet(Resource):
 
     @login_required
-    def get(self, community_id):
+    def get(self, profile_id):
         user = self.g.user
 
-        print(community_id)
-
         api = API(user.access_token, v=5.95)
-        # community = api.groups.getById(group_id=community_id)[0]
         try:
-            response = api.photos.getAlbums(owner_id=f'-{community_id}', need_system=1, need_covers=1)
+            response = api.photos.getAlbums(owner_id=profile_id, need_system=1, need_covers=1)
             albums = response['items']
             count = response['count']
         except VkAPIError:
