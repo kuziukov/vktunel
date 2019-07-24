@@ -37,8 +37,6 @@ class CommunityAlbumsGet(Resource):
     def get(self, community_id):
         user = self.g.user
 
-        print(community_id)
-
         api = API(user.access_token, v=5.95)
         # community = api.groups.getById(group_id=community_id)[0]
         try:
