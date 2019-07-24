@@ -28,6 +28,9 @@ from .resources.album import (
     CommunityAlbumsGet,
     UserAlbumsGet
 )
+from .resources.utils import (
+    UtilsLinkPost
+)
 
 api_bp = Blueprint('api', __name__, url_prefix='/v1.0', template_folder='./templates')
 api = Api(api_bp)
@@ -56,3 +59,5 @@ api.add_resource(TaskPost, '/tasks')
 api.add_resource(FcmSubscriptionPost, '/subscription/fcm')
 
 api.add_resource(ProfileGet, '/profile')
+
+api.add_resource(UtilsLinkPost, '/utils/link')
