@@ -37,7 +37,7 @@ class TasksGet(Resource):
         if 'end_time' in filters:
             query_kwargs['created_at__lte'] = filters['end_time']
 
-        tasks = Tasks.objects(user=user).filter(**query_kwargs)
+        tasks = Tasks.objects(user=user).order_by('-created_at').filter(**query_kwargs)
         items = tasks.skip(filters['start']).limit(filters['limit'])
 
         return SerializationSchema().serialize({'items': items, 'totals': items.count()})
