@@ -9,7 +9,8 @@ from .resources.notification import (
 from .resources.task import (
     TasksGet,
     TasksTest,
-    TaskPost
+    TaskPost,
+    TasksStatusGet
 )
 from .resources.subscription import (
     FcmSubscriptionPost
@@ -53,6 +54,7 @@ api.add_resource(NotificationDelete, '/notification/<string:notification_id>')
 
 api.add_resource(TasksGet, '/tasks')
 api.add_resource(TaskPost, '/tasks')
+api.add_resource(TasksStatusGet, '/tasks/<string:task_id>/status')
 
 api.add_resource(FcmSubscriptionPost, '/subscription/fcm')
 
