@@ -26,8 +26,7 @@ from .resources.community import (
     CommunityGet
 )
 from .resources.album import (
-    CommunityAlbumsGet,
-    UserAlbumsGet
+    AlbumsGet,
 )
 from .resources.utils import (
     UtilsLinkPost
@@ -44,8 +43,7 @@ api.add_resource(CommunitiesGet, '/communities')
 api.add_resource(CommunityGet, '/community/<string:community_id>')
 
 # Albums
-api.add_resource(CommunityAlbumsGet, '/community/<string:community_id>/albums')
-api.add_resource(UserAlbumsGet, '/profile/<string:profile_id>/albums')
+api.add_resource(AlbumsGet, '/albums/<string:object_id>')
 
 # Notifications
 api.add_resource(NotificationsGet, '/notifications')
