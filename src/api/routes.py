@@ -9,7 +9,8 @@ from .resources.notification import (
 from .resources.task import (
     TasksGet,
     TasksTest,
-    TaskPost
+    TaskPost,
+    TasksStatusGet
 )
 from .resources.subscription import (
     FcmSubscriptionPost
@@ -25,8 +26,10 @@ from .resources.community import (
     CommunityGet
 )
 from .resources.album import (
-    CommunityAlbumsGet,
-    UserAlbumsGet
+    AlbumsGet,
+)
+from .resources.utils import (
+    UtilsLinkPost
 )
 
 api_bp = Blueprint('api', __name__, url_prefix='/v1.0', template_folder='./templates')
@@ -39,11 +42,8 @@ api.add_resource(AuthorizationCode, '/authorization/code')
 api.add_resource(CommunitiesGet, '/communities')
 api.add_resource(CommunityGet, '/community/<string:community_id>')
 
-
 # Albums
-api.add_resource(CommunityAlbumsGet, '/community/<string:community_id>/albums')
-api.add_resource(UserAlbumsGet, '/profile/<string:profile_id>/albums')
-
+api.add_resource(AlbumsGet, '/albums/<string:object_id>')
 
 # Notifications
 api.add_resource(NotificationsGet, '/notifications')
@@ -52,7 +52,10 @@ api.add_resource(NotificationDelete, '/notification/<string:notification_id>')
 
 api.add_resource(TasksGet, '/tasks')
 api.add_resource(TaskPost, '/tasks')
+api.add_resource(TasksStatusGet, '/tasks/<string:task_id>/status')
 
 api.add_resource(FcmSubscriptionPost, '/subscription/fcm')
 
 api.add_resource(ProfileGet, '/profile')
+
+api.add_resource(UtilsLinkPost, '/utils/link')

@@ -5,7 +5,7 @@ celery = None
 
 def init_celery(app):
     global celery
-    celery = Celery(__name__)
+    celery = Celery(__name__, backend='amqp')
     celery.config_from_object(app.config['CELERY_SETTINGS'])
     return
 

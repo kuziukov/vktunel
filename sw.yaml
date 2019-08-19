@@ -96,6 +96,33 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/response'
+  '/utils/link':
+    post:
+      tags:
+        - utils
+      summary: Запрос на конвертацию ссылки
+      produces:
+        - application/json
+      operationId: convert_link
+      security:
+        - ApiKeyAuth: []
+      parameters:
+        - name: json
+          in: body
+          description: Данные пользователя для регистрации
+          required: true
+          schema:
+            type: object
+            required:
+              - link
+            properties:
+              link:
+                type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/response'
   '/tasks':
     get:
       tags:

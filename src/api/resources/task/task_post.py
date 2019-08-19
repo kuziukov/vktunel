@@ -53,19 +53,6 @@ class TaskPost(Resource):
         api = API(user.access_token, v=5.95)
 
         try:
-            utils = api.utils.resolveScreenName(screen_name=subject_id)
-        except Exception:
-            raise SubjectIdException()
-        finally:
-            if not utils:
-                raise SubjectIdException()
-
-        if utils['type'] == 'user':
-            subject_id = utils['object_id']
-        elif utils['type'] == 'group':
-            subject_id = f"-{utils['object_id']}"
-
-        try:
             response = api.photos.getAlbums(owner_id=subject_id, need_covers=1, album_ids=album_id)
         except Exception:
             raise AlbumsException()

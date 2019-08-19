@@ -56,14 +56,6 @@ class Bool(BaseField, fields.Bool):
     pass
 
 
-class BoolFile(BaseField, fields.Bool):
-
-    def _serialize(self, value, attr, obj, **kwargs):
-        if value:
-            return True
-        return False
-
-
 class Str(BaseField, fields.Str):
     pass
 
