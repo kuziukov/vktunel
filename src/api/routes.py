@@ -8,7 +8,6 @@ from .resources.notification import (
 )
 from .resources.task import (
     TasksGet,
-    TasksTest,
     TaskPost,
     TasksStatusGet
 )
