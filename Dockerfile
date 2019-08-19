@@ -4,7 +4,7 @@ COPY requirements.txt .
 
 RUN apk add libffi-dev g++ --no-cache && \
     pip install --upgrade pip setuptools && \
-    pip install -r requirements.txt --no-cache-dir
+    pip install --no-cache-dir -r requirements.txt
 
 WORKDIR /code/
 
