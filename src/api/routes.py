@@ -18,7 +18,8 @@ from .resources.authorization import (
     AuthorizationCode
 )
 from .resources.profile import (
-    ProfileGet
+    ProfileGet,
+    ProfileGets
 )
 from .resources.community import (
     CommunitiesGet,
@@ -56,5 +57,6 @@ api.add_resource(TasksStatusGet, '/tasks/<string:task_id>/status')
 api.add_resource(FcmSubscriptionPost, '/subscription/fcm')
 
 api.add_resource(ProfileGet, '/profile')
+api.add_resource(ProfileGets, '/profile/<string:profile_id>')
 
 api.add_resource(UtilsLinkPost, '/utils/link')
