@@ -3,7 +3,8 @@ from extentions import (
     init_cors,
     init_mongo,
     init_redis,
-    init_celery
+    init_celery,
+    init_timber
 )
 
 
@@ -20,6 +21,7 @@ def init_extentions(app):
     init_mongo(app=app)
     init_redis(app=app)
     init_celery(app=app)
+    init_timber(app=app)
 
 
 def init__blueprints(app):
