@@ -30,7 +30,11 @@ class AuthorizationCode(Resource):
         data = DeserializationSchema().deserialize(self.request.json)
 
         token = VKAccess(data['code'])
-        response = VKAccessResponse.access(token)
+
+        try:
+            response = VKAccessResponse.access(token)
+        except Exception as e:
+            self.logger.error(f'Failed to get access to VK: {str(e)}')
 
         if 'access_token' in response and 'user_id' in response:
 
@@ -52,6 +56,8 @@ class AuthorizationCode(Resource):
                 users.save()
             except NotUniqueError:
                 users = Users.objects.get(user_id=users.user_id)
+            except Exception as e:
+                self.logger.error(f'Failed to save user to Database: {str(e)}')
 
             session = create_session(users=users, expires_in=expires_in)
             access_token, expires_in = Token(session_id=session.key, user_id=users.id).generate(expires_in)
