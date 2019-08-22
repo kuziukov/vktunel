@@ -60,7 +60,7 @@ class TaskPost(Resource):
         subject_id = data['subject_id']
         album_id = data['album_id']
 
-        if not allow_to_download():
+        if not allow_to_download(user=user):
             raise PlanException()
 
         api = API(user.access_token, v=5.95)
