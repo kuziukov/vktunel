@@ -8,7 +8,6 @@ from extentions.celery import download_album
 from models.notification import Notification, NotificationsData
 from models.tasks import Tasks
 from cores.rest_core import Resource, APIException, codes
-from utils.plans import allow_to_download
 
 
 class DeserializationSchema(ApiSchema):
@@ -41,15 +40,6 @@ class AlbumsException(APIException):
     code = codes.BAD_REQUEST
 
 
-class PlanException(APIException):
-
-    @property
-    def message(self):
-        return 'Your plan will not allow you to download the album'
-
-    code = codes.BAD_REQUEST
-
-
 class TaskPost(Resource):
 
     @login_required
@@ -59,9 +49,6 @@ class TaskPost(Resource):
 
         subject_id = data['subject_id']
         album_id = data['album_id']
-
-        if not allow_to_download(user=user):
-            raise PlanException()
 
         api = API(user.access_token, v=5.95)
 
