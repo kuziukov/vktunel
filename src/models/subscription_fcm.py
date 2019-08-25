@@ -1,15 +1,14 @@
 from mongoengine import (
     Document,
     StringField,
-    ReferenceField,
-    DictField
+    ReferenceField
 )
 from models import Users
 
 
 class FcmSubscription(Document):
     user = ReferenceField(Users, required=True)
-    subscription = DictField(required=True, unique=True)
+    token = StringField(required=True, unique=True)
 
     meta = {
         'collection': 'fcm_subscriptions'

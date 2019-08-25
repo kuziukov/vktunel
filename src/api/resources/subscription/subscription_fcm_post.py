@@ -1,5 +1,4 @@
 from mongoengine import NotUniqueError
-
 from api.auth.decorators import login_required
 from api.resources.subscription.schemas import FCMSubscriptionSchema
 from cores.marshmallow_core import ApiSchema
@@ -17,16 +16,9 @@ class FcmTokenException(APIException):
     code = codes.BAD_REQUEST
 
 
-class KeysSchema(ApiSchema):
-    p256dh = fields.Str(required=True)
-    auth = fields.Str(required=True)
-
-
 class DeserializationSchema(ApiSchema):
 
-    endpoint = fields.Str(required=True)
-    expirationTime = fields.Str(required=True, allow_none=True)
-    keys = fields.Nested(KeysSchema, required=True)
+    token = fields.Str(required=True)
 
 
 class FcmSubscriptionPost(Resource):
@@ -37,12 +29,12 @@ class FcmSubscriptionPost(Resource):
         data = DeserializationSchema().deserialize(self.request.json)
 
         subscription = FcmSubscription()
-        subscription.subscription = data
+        subscription.token = data['token']
         subscription.user = user
 
         try:
             subscription.save()
-        except NotUniqueError:
+        except NotUniqueError as e:
             raise FcmTokenException()
 
         return FCMSubscriptionSchema().serialize(subscription)
