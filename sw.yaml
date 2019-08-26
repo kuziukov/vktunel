@@ -76,14 +76,14 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/response'
-  '/community/{communityId}/albums':
+  '/albums/{objectId}':
     get:
       tags:
         - albums
       summary: Запрос на получение всех альбомов сообщества
       operationId: albums_get
       parameters:
-        - name: communityId
+        - name: objectId
           in: path
           required: true
           type: string
@@ -238,12 +238,12 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/response'
-  '/profile/{profileId}/albums':
+  '/profile/{profileId}':
     get:
       tags:
-        - albums
-      summary: Запрос на получение альбомов пользователя
-      operationId: profileAlbums_get
+        - profile
+      summary: Запрос на получение профиля по ID
+      operationId: profile_get_by_Id
       parameters:
         - name: profileId
           in: path

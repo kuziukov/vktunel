@@ -9,3 +9,4 @@ celery==4.3.0
 pytest==5.0.0
 marshmallow==3.0.0rc4
 timber==2.1.0
+gunicorn==19.9.0

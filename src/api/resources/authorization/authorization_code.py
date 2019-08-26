@@ -29,9 +29,8 @@ class AuthorizationCode(Resource):
     def post(self):
         data = DeserializationSchema().deserialize(self.request.json)
 
-        token = VKAccess(data['code'])
-
         try:
+            token = VKAccess(data['code'])
             response = VKAccessResponse.access(token)
         except Exception as e:
             self.logger.error(f'Failed to get access to VK: {str(e)}')
