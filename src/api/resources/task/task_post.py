@@ -1,18 +1,26 @@
 from datetime import date
-
 from flask import g
 from mongoengine import Q
-
 from api.auth.decorators import login_required
 from api.resources.task import TaskSchema
 from cores.marshmallow_core import ApiSchema
 from cores.marshmallow_core import fields
 from cores.vk import API
 from extentions.celery import download_album
-from models.notification import Notification, NotificationsData
+from models.notification import (
+    Notification,
+    NotificationsData
+)
 from models.tasks import Tasks
-from cores.rest_core import Resource, APIException, codes
-from utils import get_first_day, get_last_day
+from cores.rest_core import (
+    Resource,
+    APIException,
+    codes
+)
+from utils import (
+    get_first_day,
+    get_last_day
+)
 
 
 class DeserializationSchema(ApiSchema):
