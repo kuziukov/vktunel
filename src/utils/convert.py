@@ -1,3 +1,5 @@
+from datetime import date, timedelta
+
 from flask import g
 from cores.vk import API
 
@@ -26,3 +28,13 @@ def from_link_get_id(url):
         mask = data[3]
         return mask
     return None
+
+
+def get_first_day(dt, d_years=0, d_months=0):
+    y, m = dt.year + d_years, dt.month + d_months
+    a, m = divmod(m-1, 12)
+    return date(y+a, m+1, 1)
+
+
+def get_last_day(dt):
+    return get_first_day(dt, 0, 1) + timedelta(-1)

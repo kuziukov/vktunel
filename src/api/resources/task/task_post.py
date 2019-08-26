@@ -1,4 +1,8 @@
+from datetime import date
+
 from flask import g
+from mongoengine import Q
+
 from api.auth.decorators import login_required
 from api.resources.task import TaskSchema
 from cores.marshmallow_core import ApiSchema
@@ -8,6 +12,7 @@ from extentions.celery import download_album
 from models.notification import Notification, NotificationsData
 from models.tasks import Tasks
 from cores.rest_core import Resource, APIException, codes
+from utils import get_first_day, get_last_day
 
 
 class DeserializationSchema(ApiSchema):
@@ -40,12 +45,31 @@ class AlbumsException(APIException):
     code = codes.BAD_REQUEST
 
 
+class AccountPlanException(APIException):
+
+    @property
+    def message(self):
+        return 'Your account plan does not allow you to download anymore'
+
+    code = codes.NOT_ALLOWED
+
+
+def check_account_plan(user):
+    currentMonth = date.today()
+    countOfTasks = Tasks.objects(user=user).filter(
+        (Q(created_at__gte=get_first_day(currentMonth)) & Q(created_at__lte=get_last_day(currentMonth)))).count()
+    return False if countOfTasks > 10 else True
+
+
 class TaskPost(Resource):
 
     @login_required
     def post(self):
         user = g.user
         data = DeserializationSchema().deserialize(self.request.json)
+
+        if not check_account_plan(user):
+            raise AccountPlanException()
 
         subject_id = data['subject_id']
         album_id = data['album_id']
