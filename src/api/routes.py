@@ -12,7 +12,7 @@ from .resources.task import (
     TasksStatusGet
 )
 from .resources.subscription import (
-    FcmSubscriptionPost
+    SubscriptionPost
 )
 from .resources.authorization import (
     AuthorizationCode
@@ -54,7 +54,7 @@ api.add_resource(TasksGet, '/tasks')
 api.add_resource(TaskPost, '/tasks')
 api.add_resource(TasksStatusGet, '/tasks/<string:task_id>/status')
 
-api.add_resource(FcmSubscriptionPost, '/subscription/fcm')
+api.add_resource(SubscriptionPost, '/subscription')
 
 api.add_resource(ProfileGet, '/profile')
 api.add_resource(ProfileGets, '/profile/<string:profile_id>')

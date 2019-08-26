@@ -21,7 +21,7 @@ class DeserializationSchema(ApiSchema):
     token = fields.Str(required=True)
 
 
-class FcmSubscriptionPost(Resource):
+class SubscriptionPost(Resource):
 
     @login_required
     def post(self):

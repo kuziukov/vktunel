@@ -1,1 +1,1 @@
-from .subscription_fcm_post import FcmSubscriptionPost
+from .subscription_post import SubscriptionPost
