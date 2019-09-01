@@ -1,11 +1,22 @@
+from flask import (
+    request,
+    g
+)
+from mongoengine import (
+    DoesNotExist,
+    ValidationError
+)
+from jwt import (
+    DecodeError,
+    ExpiredSignatureError
+)
 from functools import wraps
-from flask import request, g, redirect, url_for
-from jwt import DecodeError, ExpiredSignatureError
-from mongoengine import DoesNotExist, ValidationError
+from cores.rest_core import (
+    APIException,
+    codes
+)
 from .token import Token
 from models import Users
-from cores.rest_core import APIException
-from cores.rest_core import codes
 
 
 class UserNotAuthorized(APIException):
