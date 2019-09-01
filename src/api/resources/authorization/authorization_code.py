@@ -2,8 +2,7 @@ from mongoengine import NotUniqueError
 from api.auth.session import create_session
 from api.auth.token import Token
 from api.resources.authorization.schemas import AuthorizationSchema
-from cores.marshmallow_core import ApiSchema
-from cores.marshmallow_core import fields
+from cores.marshmallow_core import ApiSchema, fields
 from cores.objects import VKAccess, VKAccessResponse
 from cores.vk import API
 from models import Users
