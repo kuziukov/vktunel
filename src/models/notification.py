@@ -4,8 +4,7 @@ from mongoengine import (
     DateTimeField,
     ReferenceField,
     EmbeddedDocumentField,
-    EmbeddedDocument,
-    BooleanField
+    EmbeddedDocument
 )
 from datetime import datetime
 from .users import Users
