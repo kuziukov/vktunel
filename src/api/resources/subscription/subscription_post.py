@@ -4,7 +4,11 @@ from api.resources.subscription.schemas import FCMSubscriptionSchema
 from cores.marshmallow_core import ApiSchema
 from cores.marshmallow_core import fields
 from models.subscription_fcm import FcmSubscription
-from cores.rest_core import Resource, APIException, codes
+from cores.rest_core import (
+    Resource,
+    APIException,
+    codes
+)
 
 
 class FcmTokenException(APIException):

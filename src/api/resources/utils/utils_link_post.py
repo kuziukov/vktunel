@@ -1,10 +1,13 @@
 from flask import g
 from api.auth.decorators import login_required
-from api.resources.task import TaskSchema
 from cores.marshmallow_core import ApiSchema
 from cores.marshmallow_core import fields
 from cores.vk import API
-from cores.rest_core import Resource, APIException, codes
+from cores.rest_core import (
+    Resource,
+    APIException,
+    codes
+)
 from utils.convert import from_link_get_id
 
 

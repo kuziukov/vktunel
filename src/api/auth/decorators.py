@@ -11,6 +11,8 @@ from jwt import (
     ExpiredSignatureError
 )
 from functools import wraps
+
+from api.auth.session import Session
 from cores.rest_core import (
     APIException,
     codes
@@ -39,6 +41,10 @@ def login_required(function):
         try:
             token, expire = Token.parse(token)
         except (DecodeError, ExpiredSignatureError):
+            raise UserNotAuthorized()
+
+        session = Session(token.session_id)
+        if not session.is_exists():
             raise UserNotAuthorized()
 
         try:

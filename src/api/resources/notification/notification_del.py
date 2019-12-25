@@ -1,4 +1,7 @@
-from mongoengine import DoesNotExist, ValidationError
+from mongoengine import (
+    DoesNotExist,
+    ValidationError
+)
 from werkzeug.exceptions import NotFound
 from api.auth.decorators import login_required
 from api.resources.notification.schemas import NotificationSchema

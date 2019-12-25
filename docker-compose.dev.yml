@@ -1,4 +1,4 @@
-version: '2.1'
+version: '3'
 
 services:
   server:
@@ -17,12 +17,17 @@ services:
       - 5000:5000
   mongo:
     image: mongo
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=wlusmAdmin
+      - MONGO_INITDB_ROOT_PASSWORD=R9XEUju3xPqctXdpvjgappDq
+      - MONGO_INITDB_DATABASE=admin
     volumes:
       - mongo_data:/var/lib/mongo
     ports:
       - 27017:27017
   redis:
     image: redis
+    command: redis-server --requirepass uxDKN5ImZQcBL2ToSt9wEOcyrEmF2kK0IRlvAGi56ZqYg7wMDegNncF2LaqfF4YMLU1khnUsFvtxzP84
     volumes:
       - redis_data:/var/lib/redis
     ports:

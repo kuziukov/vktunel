@@ -38,7 +38,7 @@ class NotificationsGet(Resource):
         if 'end_time' in filters:
             query_kwargs['created_at__lte'] = filters['end_time']
 
-        notifications = Notification.objects(user=user).filter(**query_kwargs)
+        notifications = Notification.objects(user=user).filter(**query_kwargs).order_by('-created_at')
         items = notifications.skip(filters['start']).limit(filters['limit'])
 
         return SerializationSchema().serialize({'items': items, 'totals': len(items), 'filters': filters})

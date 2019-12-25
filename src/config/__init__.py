@@ -22,7 +22,7 @@ from .env import (
 
 CLIENT_ID = '7029024'
 CLIENT_SECRET = '7DctKcRPCw28VykYBslv'
-REDIRECT_URL = 'https://wlusm.ru/callback'
+REDIRECT_URL = 'http://localhost:8080/callback'
 
 
 MONGODB_SETTINGS = {
@@ -37,6 +37,7 @@ SECRET_KEY = '0bde8eef5dc532bc3d88e6c2caf5d3cb27b7d591d0cbb5941d7676a2798369a969
 
 
 SESSION_STORE_URL = f'redis://:{REDIS_PASSWORD}@{REDIS_HOST}:{REDIS_PORT}/0'
+NOTIFICATION_STORE_URL = f'redis://:{REDIS_PASSWORD}@{REDIS_HOST}:{REDIS_PORT}/1'
 
 
 CELERY_SETTINGS = dict(

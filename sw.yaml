@@ -258,6 +258,21 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/response'
+  '/stream':
+    get:
+      tags:
+        - stream
+      summary: Запрос на получение ключа доступа к стриму
+      operationId: stream_get
+      security:
+        - ApiKeyAuth: []
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/response'
 definitions:
   response:
     type: object
