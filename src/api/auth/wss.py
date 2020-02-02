@@ -50,7 +50,7 @@ def create_ws_session(users) -> WSSession:
     session_id = generate_uuid1()
     session = WSSession(session_id)
     session.data = {
-        'user_id': users.user_id
+        'user_id': str(users.id)
     }
     session.save(expires_in=120)
     return session
