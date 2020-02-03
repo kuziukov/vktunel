@@ -18,3 +18,21 @@ db.createUser(
   }
 )
 ```
+
+
+```
+use admin
+db.subscriptions.insert(
+  {
+    "number": 0,
+    "title": "Бесплатно",
+    "desc": "Тариф бесплатный",
+    "price": 0,
+    "limits": {
+      "numberOfAlbums": 10,
+      "numberOfPhotos": 1000,
+     },
+     "active": true
+  }
+)
+```
