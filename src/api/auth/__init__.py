@@ -1,4 +1,3 @@
 from .decorators import (
-    login_required,
-    web_login_required
+    login_required
 )

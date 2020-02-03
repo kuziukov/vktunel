@@ -1,11 +1,24 @@
+from flask import (
+    request,
+    g
+)
+from mongoengine import (
+    DoesNotExist,
+    ValidationError
+)
+from jwt import (
+    DecodeError,
+    ExpiredSignatureError
+)
 from functools import wraps
-from flask import request, g, redirect, url_for
-from jwt import DecodeError, ExpiredSignatureError
-from mongoengine import DoesNotExist, ValidationError
+
+from api.auth.session import Session
+from cores.rest_core import (
+    APIException,
+    codes
+)
 from .token import Token
 from models import Users
-from cores.rest_core import APIException
-from cores.rest_core import codes
 
 
 class UserNotAuthorized(APIException):
@@ -30,6 +43,10 @@ def login_required(function):
         except (DecodeError, ExpiredSignatureError):
             raise UserNotAuthorized()
 
+        session = Session(token.session_id)
+        if not session.is_exists():
+            raise UserNotAuthorized()
+
         try:
             g.user = Users.objects.get(id=token.user_id)
         except (DoesNotExist, ValidationError):
@@ -37,25 +54,4 @@ def login_required(function):
 
         return function(*args, **kwargs)
 
-    return wrapped
-
-
-def web_login_required(func):
-    @wraps(func)
-    def wrapped(*args, **kwargs):
-        cookie = request.cookies.get('access_token')
-        if cookie is None:
-            return redirect(url_for('web.index'))
-
-        try:
-            token, expire = Token.parse(cookie)
-        except (DecodeError, ExpiredSignatureError):
-            return redirect(url_for('web.index'))
-
-        try:
-            g.user = Users.objects.get(id=token.user_id)
-        except (DoesNotExist, ValidationError):
-            g.user = None
-
-        return func(*args, **kwargs)
     return wrapped

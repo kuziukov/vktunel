@@ -28,6 +28,9 @@ from .resources.community import (
 from .resources.album import (
     AlbumsGet,
 )
+from .resources.stream import (
+    StreamGet
+)
 from .resources.utils import (
     UtilsLinkPost
 )
@@ -58,5 +61,7 @@ api.add_resource(SubscriptionPost, '/subscription')
 
 api.add_resource(ProfileGet, '/profile')
 api.add_resource(ProfileGets, '/profile/<string:profile_id>')
+
+api.add_resource(StreamGet, '/stream')
 
 api.add_resource(UtilsLinkPost, '/utils/link')

@@ -3,8 +3,15 @@ from api.auth.decorators import login_required
 from api.resources.album.schemas import AlbumSchema
 from cores.marshmallow_core import ApiSchema
 from cores.marshmallow_core import fields
-from cores.rest_core import Resource, APIException, codes
-from cores.vk import API, VkAPIError
+from cores.rest_core import (
+    Resource,
+    APIException,
+    codes
+)
+from cores.vk import (
+    API,
+    VkAPIError
+)
 
 
 class AccessDenied(APIException):
