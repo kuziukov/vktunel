@@ -35,7 +35,7 @@ class Schema(OriginSchema):
 
 class ApiSchema(Schema):
 
-    def deserialize(self, data, many=None, unknown=None):
+    def deserialize(self, data, many=None, unknown='unknown'):
         try:
             data = self.load(data, many=many, unknown=unknown)
         except ValidationError as e:
