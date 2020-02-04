@@ -22,7 +22,7 @@ db.createUser(
 
 ```
 use admin
-db.subscriptions.insert(
+db.plans.insert(
   {
     "number": 0,
     "title": "Бесплатно",
