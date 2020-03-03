@@ -1,3 +1,4 @@
+from api.resources.plans.schemas import SubscriptionSchema
 from cores.marshmallow_core import (
     ApiSchema
 )
@@ -8,6 +9,7 @@ from api.resources.task.schemas import TaskSchema
 class NotificationsDataSchema(ApiSchema):
 
     task = fields.Nested(TaskSchema)
+    subscription = fields.Nested(SubscriptionSchema)
 
 
 class UserSchema(ApiSchema):

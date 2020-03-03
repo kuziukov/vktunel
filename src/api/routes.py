@@ -34,6 +34,13 @@ from .resources.stream import (
 from .resources.utils import (
     UtilsLinkPost
 )
+from .resources.plans import (
+    PlansGet,
+    PlanPost,
+    PlanGet,
+    PlanUpdate,
+    PlanDelete
+)
 
 api_bp = Blueprint('api', __name__, url_prefix='/v1.0', template_folder='./templates')
 api = Api(api_bp)
@@ -53,15 +60,27 @@ api.add_resource(NotificationsGet, '/notifications')
 api.add_resource(NotificationUpdate, '/notification/<string:notification_id>')
 api.add_resource(NotificationDelete, '/notification/<string:notification_id>')
 
+# Tasks
 api.add_resource(TasksGet, '/tasks')
 api.add_resource(TaskPost, '/tasks')
 api.add_resource(TasksStatusGet, '/tasks/<string:task_id>/status')
 
+# Web Subscriptions
 api.add_resource(SubscriptionPost, '/subscription')
 
+# Profiles
 api.add_resource(ProfileGet, '/profile')
 api.add_resource(ProfileGets, '/profile/<string:profile_id>')
 
+# Stream
 api.add_resource(StreamGet, '/stream')
 
+# Plans
+api.add_resource(PlanGet, '/subscriptions')
+api.add_resource(PlanDelete, '/subscription')
+api.add_resource(PlansGet, '/plans')
+api.add_resource(PlanPost, '/plan/<string:plan_id>')
+api.add_resource(PlanUpdate, '/plan/<string:plan_id>')
+
+# Utils
 api.add_resource(UtilsLinkPost, '/utils/link')

@@ -273,6 +273,39 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/response'
+  '/plans':
+    get:
+      tags:
+        - plans
+      summary: Запрос на получение всех типов подписок
+      operationId: plans_get
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/response'
+  '/plan/{planId}':
+    post:
+      tags:
+        - plans
+      summary: Запрос на подключение плана
+      produces:
+        - application/json
+      operationId: plan_post
+      security:
+        - ApiKeyAuth: []
+      parameters:
+        - name: planId
+          in: path
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/response'
 definitions:
   response:
     type: object

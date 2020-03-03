@@ -39,7 +39,10 @@ class CommunitiesGet(Resource):
             query_kwargs['created_at__lte'] = filters['end_time']
 
         api = API(user.access_token, v=5.95)
-        response = api.groups.get(extended=1)
+        try:
+            response = api.groups.get(extended=1)
+        except Exception as e:
+            print(str(e))
 
         community = response['items']
         count = response['count']

@@ -19,6 +19,7 @@ from cores.rest_core import (
 )
 from .token import Token
 from models import Users
+from datetime import datetime
 
 
 class UserNotAuthorized(APIException):
@@ -28,6 +29,32 @@ class UserNotAuthorized(APIException):
         return 'Sorry, but user is not authorized, Please log in again.'
 
     code = codes.UNAUTHORIZED
+
+
+class SubscriptionExpired(APIException):
+
+    @property
+    def message(self):
+        return 'The subscription of the account is expired'
+
+    code = codes.NOT_ALLOWED
+
+
+def valid_subscription(function):
+
+    @login_required
+    def wrapped(*args, **kwargs):
+        user = g.user
+
+        try:
+            if user.subscription.expired_on < datetime.utcnow() or user.subscription.paid is not True:
+                raise SubscriptionExpired()
+        except Exception:
+            raise SubscriptionExpired()
+
+        return function(*args, **kwargs)
+
+    return wrapped
 
 
 def login_required(function):
