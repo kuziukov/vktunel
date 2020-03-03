@@ -7,6 +7,8 @@ from mongoengine import (
     EmbeddedDocument
 )
 from datetime import datetime
+
+from .subscription import Subscription
 from .users import Users
 from .tasks import Tasks
 
@@ -14,6 +16,7 @@ from .tasks import Tasks
 class NotificationsData(EmbeddedDocument):
 
     task = ReferenceField(Tasks)
+    subscription = ReferenceField(Subscription)
 
 
 class Notification(Document):

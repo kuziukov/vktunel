@@ -1,7 +1,7 @@
 from datetime import date
 from flask import g
 from mongoengine import Q
-from api.auth.decorators import login_required
+from api.auth.decorators import login_required, valid_subscription
 from api.resources.task import TaskSchema
 from cores.marshmallow_core import ApiSchema
 from cores.marshmallow_core import fields
@@ -66,12 +66,12 @@ def check_account_plan(user):
     currentMonth = date.today()
     countOfTasks = Tasks.objects(user=user).filter(
         (Q(created_at__gte=get_first_day(currentMonth)) & Q(created_at__lte=get_last_day(currentMonth)))).count()
-    return False if countOfTasks > 10 else True
+    return False if countOfTasks >= 10 else True
 
 
 class TaskPost(Resource):
 
-    @login_required
+    @valid_subscription
     def post(self):
         user = g.user
         data = DeserializationSchema().deserialize(self.request.json)
