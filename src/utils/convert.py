@@ -37,4 +37,4 @@ def get_first_day(dt, d_years=0, d_months=0):
 
 
 def get_last_day(dt):
-    return get_first_day(dt, 0, 1) + timedelta(-1)
+    return get_first_day(dt, 0, 1)

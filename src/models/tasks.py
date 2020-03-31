@@ -15,7 +15,7 @@ class Tasks(Document):
     album_id = StringField(required=True)
     album_name = StringField(required=True)
     archive = FileField()
-    created_at = DateTimeField(default=datetime.now)
+    created_at = DateTimeField(default=datetime.utcnow)
 
     meta = {
         'collection': 'tasks'

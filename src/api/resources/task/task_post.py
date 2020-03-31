@@ -1,3 +1,4 @@
+import datetime
 from datetime import date
 from flask import g
 from mongoengine import Q
@@ -64,8 +65,13 @@ class AccountPlanException(APIException):
 
 def check_account_plan(user):
     currentMonth = date.today()
+    firstDayOfMonth = get_first_day(currentMonth)
+    lastDayOfMonth = get_last_day(currentMonth)
+
     countOfTasks = Tasks.objects(user=user).filter(
-        (Q(created_at__gte=get_first_day(currentMonth)) & Q(created_at__lte=get_last_day(currentMonth)))).count()
+        Q(created_at__gte=firstDayOfMonth) & Q(created_at__lte=lastDayOfMonth)
+    ).count()
+
     return False if countOfTasks >= 10 else True
 
 
