@@ -72,7 +72,7 @@ def check_account_plan(user):
         Q(created_at__gte=firstDayOfMonth) & Q(created_at__lte=lastDayOfMonth)
     ).count()
 
-    return False if countOfTasks >= 10 else True
+    return False if countOfTasks >= user.subscription.plan.limits.numberOfAlbums else True
 
 
 class TaskPost(Resource):
@@ -82,7 +82,10 @@ class TaskPost(Resource):
         user = g.user
         data = DeserializationSchema().deserialize(self.request.json)
 
-        if not check_account_plan(user):
+        try:
+            if not check_account_plan(user):
+                raise AccountPlanException()
+        except Exception:
             raise AccountPlanException()
 
         subject_id = data['subject_id']
