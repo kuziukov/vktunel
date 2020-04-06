@@ -8,8 +8,7 @@ from .resources.notification import (
 )
 from .resources.task import (
     TasksGet,
-    TaskPost,
-    TasksStatusGet
+    TaskPost
 )
 from .resources.subscription import (
     SubscriptionPost
@@ -63,7 +62,6 @@ api.add_resource(NotificationDelete, '/notification/<string:notification_id>')
 # Tasks
 api.add_resource(TasksGet, '/tasks')
 api.add_resource(TaskPost, '/tasks')
-api.add_resource(TasksStatusGet, '/tasks/<string:task_id>/status')
 
 # Web Subscriptions
 api.add_resource(SubscriptionPost, '/subscription')
